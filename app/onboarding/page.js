@@ -1,6 +1,12 @@
+"use client";
+import Link from "next/link";
+
+import { useRouter } from "next/navigation";
 import React from 'react';
 
+
 export default function Onboarding() {
+  const router = useRouter();
   return (
     // md:h-screen prevents the page from being taller than the laptop screen window
     // On mobile, it allows natural scrolling (min-h-screen)
@@ -42,12 +48,14 @@ export default function Onboarding() {
 
           {/* Action Buttons Container */}
           <div className="w-full flex gap-4 mt-8 md:mt-10 max-w-xs sm:max-w-sm md:max-w-xs mx-auto md:mx-0">
-            <button className="flex-1 py-3 px-6 rounded-full font-bold text-[#3b2fc4] bg-[#f4f6fa] hover:bg-[#e8ecf5] active:scale-[0.98] transition-all duration-200 text-sm sm:text-base md:text-sm">
-              Skip
-            </button>
-            <button className="flex-1 py-3 px-6 rounded-full font-bold text-white bg-[#3b2fc4] hover:bg-[#2f24a8] shadow-lg shadow-purple-200 active:scale-[0.98] transition-all duration-200 text-sm sm:text-base md:text-sm">
-              Next
-            </button>
+          <Link href="/welcome">
+  <button
+    type="button"
+    className="flex-1 py-3 px-6 rounded-full font-bold text-white bg-[#3b2fc4]"
+  >
+    Next
+  </button>
+</Link>
           </div>
           
         </div>
