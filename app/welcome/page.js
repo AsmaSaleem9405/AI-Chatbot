@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link"; // Imported for routing
 
 export default function WelcomePage() {
   return (
@@ -47,13 +48,19 @@ export default function WelcomePage() {
 
         {/* Action Buttons */}
         <div className="mt-8 md:mt-12 space-y-3.5 max-w-sm sm:max-w-md w-full">
-          <button className="w-full h-12 sm:h-14 rounded-full bg-[#3F37C9] text-white font-semibold shadow-lg shadow-indigo-600/10 hover:bg-[#372FB5] hover:shadow-xl hover:shadow-indigo-600/20 active:scale-[0.99] transition-all duration-200">
-            Log in
-          </button>
+          {/* Link to Login page */}
+          <Link href="/login" className="block w-full">
+            <button className="w-full h-12 sm:h-14 rounded-full bg-[#3F37C9] text-white font-semibold shadow-lg shadow-indigo-600/10 hover:bg-[#372FB5] hover:shadow-xl hover:shadow-indigo-600/20 active:scale-[0.99] transition-all duration-200">
+              Log in
+            </button>
+          </Link>
 
-          <button className="w-full h-12 sm:h-14 rounded-full bg-[#F0F3FF] text-[#3F37C9] font-semibold hover:bg-[#E5E9FA] active:scale-[0.99] transition-all duration-200">
-            Sign Up
-          </button>
+          {/* Link to Signup page */}
+          <Link href="/signup" className="block w-full">
+            <button className="w-full h-12 sm:h-14 rounded-full bg-[#F0F3FF] text-[#3F37C9] font-semibold hover:bg-[#E5E9FA] active:scale-[0.99] transition-all duration-200">
+              Sign Up
+            </button>
+          </Link>
         </div>
 
       </div>
