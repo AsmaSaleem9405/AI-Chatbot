@@ -8,7 +8,7 @@ export default function WelcomePage() {
       <div className="w-full md:w-1/2 bg-[#EEF2FD] p-8 md:p-12 flex items-center justify-center relative min-h-[40vh] md:min-h-screen">
         
         {/* Abstract Background Shapes */}
-        <div className="absolute top-8 left-[-20px] w-48 h-12 bg-[#E3E8F8] rounded-full opacity-70"></div>
+        <div className="absolute top-8 -left-5 w-48 h-12 bg-[#E3E8F8] rounded-full opacity-70"></div>
         <div className="absolute top-20 left-10 w-64 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
         <div className="absolute top-44 left-4 w-52 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
         <div className="absolute bottom-20 left-16 w-60 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
