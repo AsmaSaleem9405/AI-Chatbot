@@ -34,29 +34,35 @@ export default function SignUp() {
       return;
     }
 
-    setLoading(true);
+    try {
+  setLoading(true);
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { display_name: name },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        display_name: name,
       },
-    });
+      emailRedirectTo: `${window.location.origin}/auth/callback`,
+    },
+  });
 
-    setLoading(false);
+  console.log("Signup Data:", data);
+  console.log("Signup Error:", error);
 
-    if (error) {
-      setErrorMsg(error.message);
-    } else {
-      if (data?.user?.identities?.length === 0) {
-        setErrorMsg("This email already has an account. Please log in.");
-      } else {
-        alert("Registration successful! Check your email for verification.");
-        router.push('/login');
-      }
-    }
+  if (error) throw error;
+
+  alert("Registration successful! Please check your email.");
+
+  router.push("/login");
+
+} catch (err) {
+  console.error(err);
+  setErrorMsg(err.message);
+} finally {
+  setLoading(false);
+}
   };
 
   return (

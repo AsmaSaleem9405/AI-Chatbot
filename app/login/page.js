@@ -43,9 +43,7 @@ export default function Login() {
   return (
     /* 
       FIX FOR ROOT LAYOUT OVERFLOW-HIDDEN:
-      Creates an isolated full-screen layout wrapper that manages its own vertical scrolling.
-      Using flex with 'items-start sm:items-center' keeps it centered on large displays 
-      but stops top-clipping on short desktop browser windows.
+     
     */
     <div className="w-screen h-screen bg-gray-50 flex justify-center items-start sm:items-center overflow-y-auto py-12 px-4 sm:px-6 lg:px-8">
       
