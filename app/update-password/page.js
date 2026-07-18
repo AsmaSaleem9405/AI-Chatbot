@@ -19,6 +19,7 @@ export default function UpdatePassword() {
     setSuccessMsg('');
     setLoading(true);
 
+    // This updates the user password for the currently active session
     const { error } = await supabase.auth.updateUser({
       password: password,
     });
@@ -30,6 +31,9 @@ export default function UpdatePassword() {
     } else {
       setSuccessMsg("Password updated successfully! Redirecting you to the login page...");
       
+      // Clear out active temporary recovery session so they log in cleanly
+      await supabase.auth.signOut();
+
       // Delay for 2 seconds so they can see the success state
       setTimeout(() => {
         router.push('/login'); 
