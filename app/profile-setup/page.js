@@ -1,4 +1,3 @@
-// app/profile-setup/page.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -77,10 +76,21 @@ export default function ProfileSetup() {
         updated_at: new Date().toISOString(),
       };
 
+      // 1. Save to Supabase DB
       const { error } = await supabase.from('profiles').upsert(updates);
       if (error) throw error;
 
-      router.push('/dashboard');
+      // 2. Save to LocalStorage for instant UI updates on next page
+      localStorage.setItem('user_profile', JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        gender: formData.gender,
+        dob: formData.dob,
+        image: avatarUrl
+      }));
+
+      // 3. Navigate to dashboard
+      router.push('/dashboard/ai-helpers');
     } catch (error) {
       alert(error.message);
     } finally {
@@ -89,18 +99,11 @@ export default function ProfileSetup() {
   };
 
   return (
-    /* 
-      Outer Wrapper: Switched to a CSS Grid layout (`grid place-items-center content-center`).
-      This automatically handles vertical centering on large monitors, but if the laptop screen 
-      is short, it defaults cleanly to standard page layout and scrolls the entire window 
-      without trapping the scrollbar inside the form or cutting off the bottom button.
-    */
-    <div className="w-screen h-screen bg-gray-50 flex justify-center items-start sm:items-center overflow-y-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-screen h-screen bg-gray-50 flex justify-center items-start sm:items-center overflow-y-auto py-12 px-4 sm:px-6 lg:px-8">
       
       {/* Container Card */}
       <div className="w-full max-w-md mt-35 bg-white h-auto rounded-[32px] shadow-2xl flex flex-col p-6 md:p-8 border border-white/10">
         
-        {/* Back Action button */}
         <button 
           type="button" 
           onClick={() => router.back()} 
@@ -109,14 +112,12 @@ export default function ProfileSetup() {
           <ArrowLeft className="w-6 h-6" />
         </button>
 
-        {/* Form Body Setup */}
         <form onSubmit={handleSubmit} className="w-full flex flex-col">
-          
           <h1 className="text-2xl font-extrabold text-black tracking-tight mb-1">
             Finish up your profile!
           </h1>
           <p className="text-black text-sm mb-8">
-            Complete your profile before to jump in!
+            Complete your profile before jumping in!
           </p>
 
           {/* Profile Picture Uploader Element */}
@@ -192,7 +193,6 @@ export default function ProfileSetup() {
             />
           </div>
 
-          {/* Submission Action Button */}
           <button
             type="submit"
             disabled={loading || uploading}
@@ -201,7 +201,6 @@ export default function ProfileSetup() {
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             Let's keep going!
           </button>
-
         </form>
       </div>
     </div>
