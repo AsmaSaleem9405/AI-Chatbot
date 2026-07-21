@@ -322,8 +322,37 @@ export default function AIHelpersPage() {
     setChatMessages([]);
   };
 
+  // 💡 SAVE TO SUPABASE HISTORY FUNCTION
+// 💡 SAVE TO SUPABASE HISTORY FUNCTION
+  const saveToHistory = async (queryText) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const { error } = await supabase
+        .from('chat_history')
+        .insert([{ 
+          query: queryText, 
+          user_id: user ? user.id : null 
+        }]);
+
+      if (error) {
+        console.error('Error saving history:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+      }
+    } catch (err) {
+      console.error('History save catch error:', err);
+    }
+  };
+
   const sendMessage = async (userText, currentHistory = chatMessages, customSystemPrompt = null) => {
     if (!userText.trim() || isLoading) return;
+
+    // Save prompt text to database history
+    await saveToHistory(userText);
 
     const updatedMessages = [...currentHistory, { role: 'user', content: userText }];
     setChatMessages(updatedMessages);

@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
     { id: "assistants", label: "AI Assistants", href: "/dashboard/chat", icon: Users },
    
 
-    { id: "history", label: "History", href: "/history", icon: Clock },
+    { id: "history", label: "History", href: "/dashboard/history", icon: Clock },
     { id: "settings", label: "Settings", href: "/settings", icon: Settings },
   ];
 
