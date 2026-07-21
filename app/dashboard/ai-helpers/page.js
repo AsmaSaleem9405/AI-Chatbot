@@ -30,7 +30,11 @@ const HELPERS = [
     description: 'Craft compelling essays effortlessly.',
     icon: Pencil,
     image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an expert Essay Writer. Help the user draft, outline, and refine well-structured essays.'
+    systemPrompt: 'You are an expert Essay Writer. Help the user draft, outline, and refine well-structured essays.',
+    suggestions: [
+      { title: 'Why does the earth rotate?', desc: 'Discover the science behind Earth\'s motion.' },
+      { title: 'Write me a recommendation letter', desc: 'Get a professional and persuasive letter instantly.' }
+    ]
   },
   {
     id: 'academic-writer',
@@ -39,7 +43,11 @@ const HELPERS = [
     description: 'Get structured, research-backed academic content.',
     icon: GraduationCap,
     image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Academic Writing Specialist. Provide scholarly, well-formatted content.'
+    systemPrompt: 'You are an Academic Writing Specialist. Provide scholarly, well-formatted content.',
+    suggestions: [
+      { title: 'Outline a research paper', desc: 'Structure key sections for academic submission.' },
+      { title: 'Summarize a study', desc: 'Extract key methodologies and key conclusions.' }
+    ]
   },
   {
     id: 'lyrics-songs',
@@ -48,7 +56,11 @@ const HELPERS = [
     description: 'Turn your ideas into catchy and meaningful lyrics.',
     icon: Music,
     image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a creative Songwriter and Lyricist.'
+    systemPrompt: 'You are a creative Songwriter and Lyricist.',
+    suggestions: [
+      { title: 'Write an acoustic chorus', desc: 'Emotional and catchy chorus for acoustic guitar.' },
+      { title: 'Rhyme scheme ideas', desc: 'Generate fresh lyrics around love or life.' }
+    ]
   },
   {
     id: 'storyteller',
@@ -57,7 +69,11 @@ const HELPERS = [
     description: 'Create engaging and immersive stories in seconds.',
     icon: BookOpen,
     image: 'https://images.unsplash.com/photo-1474939557375-0047f6e8178f?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Master Storyteller.'
+    systemPrompt: 'You are a Master Storyteller.',
+    suggestions: [
+      { title: 'Sci-Fi Plot Twist', desc: 'Brainstorm a mind-bending story conclusion.' },
+      { title: 'Character Backstory', desc: 'Build a deep and complex hero biography.' }
+    ]
   },
 
   // --- BUSINESS (3) ---
@@ -68,7 +84,11 @@ const HELPERS = [
     description: 'Write professional and polished emails instantly.',
     icon: Mail,
     image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Executive Communication Expert.'
+    systemPrompt: 'You are an Executive Communication Expert.',
+    suggestions: [
+      { title: 'Ask for a salary raise', desc: 'Polite and convincing email to your manager.' },
+      { title: 'Cold outreach email', desc: 'Engaging email pitch for potential clients.' }
+    ]
   },
   {
     id: 'interview-coach',
@@ -77,7 +97,11 @@ const HELPERS = [
     description: 'Ace your interviews with expert tips and mock practice.',
     icon: UserCheck,
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Experienced Technical & HR Interviewer.'
+    systemPrompt: 'You are an Experienced Technical & HR Interviewer.',
+    suggestions: [
+      { title: 'Mock HR Questions', desc: 'Practice answering "Tell me about yourself".' },
+      { title: 'STAR Method tips', desc: 'Structure your behavioral answers smoothly.' }
+    ]
   },
   {
     id: 'pitch-deck',
@@ -86,7 +110,11 @@ const HELPERS = [
     description: 'Structure startup pitches that captivate investors.',
     icon: Briefcase,
     image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a VC Investment Analyst.'
+    systemPrompt: 'You are a VC Investment Analyst.',
+    suggestions: [
+      { title: 'Problem & Solution slide', desc: 'Craft a compelling vision statement.' },
+      { title: 'Monetization Strategy', desc: 'Outline business models clearly for VC funding.' }
+    ]
   },
 
   // --- MEDICAL & HEALTH (3) ---
@@ -97,7 +125,11 @@ const HELPERS = [
     description: 'Understand medical terms, symptoms, and health advice.',
     icon: Stethoscope,
     image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an informative AI Medical Assistant.'
+    systemPrompt: 'You are an informative AI Medical Assistant.',
+    suggestions: [
+      { title: 'Explain blood test terms', desc: 'Understand normal ranges and terminology.' },
+      { title: 'Healthy sleep habits', desc: 'Tips for improving circadian rhythms.' }
+    ]
   },
   {
     id: 'fitness-coach',
@@ -106,7 +138,11 @@ const HELPERS = [
     description: 'Get custom workout routines and fitness advice.',
     icon: Dumbbell,
     image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a certified Personal Trainer.'
+    systemPrompt: 'You are a certified Personal Trainer.',
+    suggestions: [
+      { title: '30-minute HIIT routine', desc: 'No-equipment bodyweight workout plan.' },
+      { title: 'High-protein diet ideas', desc: 'Easy meal ideas to support muscle recovery.' }
+    ]
   },
   {
     id: 'mindful-mentor',
@@ -115,7 +151,11 @@ const HELPERS = [
     description: 'Find clarity and calm with empathetic guidance.',
     icon: Heart,
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an empathetic Mindful Guide.'
+    systemPrompt: 'You are an empathetic Mindful Guide.',
+    suggestions: [
+      { title: '5-minute breathing exercise', desc: 'Reduce anxiety and reset your mind.' },
+      { title: 'Daily journaling prompts', desc: 'Reflect on gratitude and focus.' }
+    ]
   },
 
   // --- CODING & TECH (2) ---
@@ -126,7 +166,11 @@ const HELPERS = [
     description: 'Fix bugs and optimize code across any programming language.',
     icon: Code,
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Senior Software Engineer.'
+    systemPrompt: 'You are a Senior Software Engineer.',
+    suggestions: [
+      { title: 'Fix React render loop', desc: 'Identify and fix infinite state updates.' },
+      { title: 'Optimize SQL query', desc: 'Improve database query response times.' }
+    ]
   },
   {
     id: 'tech-architect',
@@ -135,7 +179,11 @@ const HELPERS = [
     description: 'Design database schemas and software systems.',
     icon: Cpu,
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Principal Software Architect.'
+    systemPrompt: 'You are a Principal Software Architect.',
+    suggestions: [
+      { title: 'Design user auth schema', desc: 'Relational model for roles & permissions.' },
+      { title: 'Microservices vs Monolith', desc: 'Choose the best setup for your product.' }
+    ]
   },
 
   // --- MARKETING (1) ---
@@ -146,7 +194,11 @@ const HELPERS = [
     description: 'Generate viral content ideas, captions, and posts.',
     icon: Share2,
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Social Media Content Strategist.'
+    systemPrompt: 'You are a Social Media Content Strategist.',
+    suggestions: [
+      { title: 'Instagram Reel strategy', desc: 'Hooks and captions to drive engagement.' },
+      { title: 'LinkedIn content calendar', desc: 'Weekly schedule for professional reach.' }
+    ]
   },
 
   // --- PRODUCTIVITY (1) ---
@@ -157,7 +209,11 @@ const HELPERS = [
     description: 'Craft ATS-friendly resumes tailored to your target job.',
     icon: FileText,
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Executive Resume Writer.'
+    systemPrompt: 'You are an Executive Resume Writer.',
+    suggestions: [
+      { title: 'Action verbs for bullet points', desc: 'Make achievements stand out on paper.' },
+      { title: 'Target resume to job post', desc: 'Match keywords for ATS filters.' }
+    ]
   }
 ];
 
@@ -257,10 +313,10 @@ export default function AIHelpersPage() {
     setChatMessages([]);
   };
 
-  const sendMessage = async (userText) => {
+  const sendMessage = async (userText, currentHistory = chatMessages, customSystemPrompt = null) => {
     if (!userText.trim() || isLoading) return;
 
-    const updatedMessages = [...chatMessages, { role: 'user', content: userText }];
+    const updatedMessages = [...currentHistory, { role: 'user', content: userText }];
     setChatMessages(updatedMessages);
     
     setPromptInput('');
@@ -271,7 +327,7 @@ export default function AIHelpersPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemPrompt: activeModal?.systemPrompt || 'You are a helpful AI assistant.',
+          systemPrompt: customSystemPrompt || activeModal?.systemPrompt || 'You are a helpful AI assistant.',
           userMessage: userText,
           history: updatedMessages
         }),
@@ -307,23 +363,19 @@ export default function AIHelpersPage() {
 
     const generalHelper = {
       id: 'general-chat',
-      title: 'General AI Assistant',
-      category: 'Chat & Search',
+      title: 'New Chat',
+      category: 'General Assistant',
       description: 'Ask questions or explore ideas with a versatile AI.',
       icon: Bot,
       image: '',
-      systemPrompt: 'You are a knowledgeable and versatile AI assistant.'
+      systemPrompt: 'You are a knowledgeable AI assistant. Keep full conversation history and remember previous context.'
     };
 
-    setActiveModal(generalHelper);
     const initialQuery = generalSearch;
-    
     setGeneralSearch('');
-    setChatMessages([{ role: 'user', content: initialQuery }]);
     
-    setTimeout(() => {
-      sendMessage(initialQuery);
-    }, 100);
+    setActiveModal(generalHelper);
+    sendMessage(initialQuery, [], generalHelper.systemPrompt);
   };
 
   const closeModal = () => {
@@ -339,7 +391,6 @@ export default function AIHelpersPage() {
   };
 
   return (
-    /* FIXED CONTAINMENT: forcing height & overflow-y-auto here overrides blocked layout-level scrolling */
     <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
       {/* NAVBAR */}
@@ -495,7 +546,6 @@ export default function AIHelpersPage() {
                         onClick={() => handleOpenModal(helper)}
                         className="bg-white border border-slate-100 rounded-3xl p-5 flex items-start space-x-4 shadow-sm hover:shadow-md hover:border-indigo-100 transition duration-200 cursor-pointer group"
                       >
-                        {/* Container with Icon fallback if image errors */}
                         <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 bg-indigo-50 flex items-center justify-center">
                           {helper.image && (
                             <img 
@@ -528,37 +578,83 @@ export default function AIHelpersPage() {
         </div>
       </main>
 
-      {/* CONTINUOUS AI CHAT WORKSPACE MODAL */}
+      {/* FULL-SCREEN CHAT INTERFACE (MOBILE & LAPTOP RESPONSIVE) */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-3xl w-full max-w-2xl h-[85vh] sm:h-[80vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100">
-            
-            {/* Modal Header */}
-            <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-                  {activeModal.icon ? <activeModal.icon className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
-                </div>
-                <div>
-                  <h3 className="font-bold text-base text-slate-900">{activeModal.title}</h3>
-                  <p className="text-xs text-slate-500">{activeModal.category} Assistant</p>
-                </div>
-              </div>
+        <div className="fixed inset-0 z-50 bg-white flex flex-col h-full w-full">
+          
+          {/* Top Bar Header */}
+          <div className="px-4 py-3 sm:px-8 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0 max-w-5xl mx-auto w-full">
+            <div className="flex items-center space-x-3">
               <button 
                 onClick={closeModal}
-                className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition"
+                className="p-2 -ml-2 rounded-full hover:bg-slate-100 text-slate-800 transition"
               >
-                <X className="w-5 h-5" />
+                <ArrowLeft className="w-6 h-6" />
               </button>
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                {activeModal.title}
+              </h2>
             </div>
+            
+            <button 
+              onClick={closeModal}
+              className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition hidden sm:block"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
-            {/* Chat Messages Workspace */}
-            <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-4">
+          {/* Chat Messages Body */}
+          <div className="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 py-6 sm:px-6 flex flex-col justify-between">
+            
+            <div className="space-y-4 flex-1">
               {chatMessages.length === 0 ? (
-                <div className="text-center py-12 text-slate-400 space-y-2">
-                  <Sparkles className="w-8 h-8 mx-auto text-indigo-400 opacity-60" />
-                  <p className="text-sm font-medium text-slate-600">What would you like to ask or build today?</p>
-                  <p className="text-xs text-slate-400">Type your request below to begin.</p>
+                <div className="h-full flex flex-col justify-end pb-4">
+                  {/* Suggestion Cards Container matching screenshot design */}
+                  {activeModal.suggestions && activeModal.suggestions.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                      {activeModal.suggestions.map((item, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => sendMessage(item.title)}
+                          className="p-4 bg-slate-50 hover:bg-indigo-50/50 border border-slate-100 rounded-2xl text-left transition group"
+                        >
+                          <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 mb-1">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-slate-400 line-clamp-2">
+                            {item.desc}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                      <button
+                        onClick={() => sendMessage('Why does the earth rotate?')}
+                        className="p-4 bg-slate-50 hover:bg-indigo-50/50 border border-slate-100 rounded-2xl text-left transition group"
+                      >
+                        <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 mb-1">
+                          Why does the earth rotate?
+                        </p>
+                        <p className="text-xs text-slate-400">
+                          Discover the science behind Earth's motion.
+                        </p>
+                      </button>
+
+                      <button
+                        onClick={() => sendMessage('Write me a recommendation letter')}
+                        className="p-4 bg-slate-50 hover:bg-indigo-50/50 border border-slate-100 rounded-2xl text-left transition group"
+                      >
+                        <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 mb-1">
+                          Write me a recommendation letter
+                        </p>
+                        <p className="text-xs text-slate-400">
+                          Get a professional and persuasive letter instantly.
+                        </p>
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 chatMessages.map((msg, index) => (
@@ -567,16 +663,16 @@ export default function AIHelpersPage() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div 
-                      className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed ${
+                      className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         msg.role === 'user' 
                           ? 'bg-indigo-600 text-white rounded-tr-none shadow-sm' 
-                          : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200/50'
+                          : 'bg-slate-100 text-slate-800 rounded-tl-none'
                       }`}
                     >
                       {msg.role === 'assistant' && (
-                        <div className="flex items-center space-x-1.5 text-xs font-semibold text-indigo-600 mb-1">
+                        <div className="flex items-center space-x-1 text-xs font-semibold text-indigo-600 mb-1">
                           <Sparkles className="w-3.5 h-3.5" />
-                          <span>AI Response</span>
+                          <span>AI Assistant</span>
                         </div>
                       )}
                       <div className="whitespace-pre-wrap">{msg.content}</div>
@@ -587,7 +683,7 @@ export default function AIHelpersPage() {
 
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-100 text-slate-500 rounded-2xl rounded-tl-none p-4 text-sm flex items-center space-x-2 border border-slate-200/50">
+                  <div className="bg-slate-100 text-slate-500 rounded-2xl rounded-tl-none px-4 py-3 text-sm flex items-center space-x-2">
                     <Loader2 className="w-4 h-4 animate-spin text-indigo-600" />
                     <span>Thinking...</span>
                   </div>
@@ -596,25 +692,32 @@ export default function AIHelpersPage() {
               <div ref={chatEndRef} />
             </div>
 
-            {/* Input Bar Form */}
-            <form onSubmit={handleModalSubmit} className="p-4 border-t border-slate-100 bg-white flex items-center space-x-2 shrink-0">
+          </div>
+
+          {/* Bottom Fixed Input Box Container matching design */}
+          <div className="w-full bg-white border-t border-slate-100 p-3 sm:p-4 shrink-0">
+            <form onSubmit={handleModalSubmit} className="max-w-3xl mx-auto flex items-center space-x-2">
               <input
                 type="text"
-                placeholder={`Ask ${activeModal.title}...`}
+                placeholder="Ask me anything..."
                 value={promptInput}
                 onChange={(e) => setPromptInput(e.target.value)}
-                className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition"
+                className="flex-1 bg-slate-50 border border-slate-200/80 rounded-full px-5 py-3.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition placeholder-slate-400"
               />
               <button
                 type="submit"
                 disabled={isLoading || !promptInput.trim()}
-                className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-5 py-3 rounded-xl font-medium text-sm flex items-center justify-center transition shadow-sm shrink-0"
+                className="w-12 h-12 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition shadow-md shrink-0"
               >
-                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4" />}
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5 translate-x-0.5" />
+                )}
               </button>
             </form>
-
           </div>
+
         </div>
       )}
     </div>
