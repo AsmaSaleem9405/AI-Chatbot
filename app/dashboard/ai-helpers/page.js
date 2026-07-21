@@ -9,7 +9,7 @@ import {
   Heart, ArrowLeft, Send, Sparkles, X, Loader2, 
   Code, Briefcase, Bot, Search, LogOut, ChevronDown,
   Stethoscope, Share2, Dumbbell,
-  FileText, Cpu, Plus
+  FileText, Cpu, Plus, Settings, User
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -277,6 +277,8 @@ export default function AIHelpersPage() {
               dob: data.dob || '',
               image: data.avatar_url || null
             });
+          } else if (user.email) {
+            setProfile(prev => ({ ...prev, email: user.email }));
           }
         }
       } catch (err) {
@@ -300,6 +302,12 @@ export default function AIHelpersPage() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem('user_profile');
+    router.push('/login');
+  };
 
   const filteredHelpers = selectedCategory === 'All' 
     ? HELPERS 
@@ -395,36 +403,13 @@ export default function AIHelpersPage() {
       
       {/* NAVBAR */}
       <header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8">
-        <div className="max-w-6xl mx-auto h-full flex items-center justify-between">
+        <div className="max-w-6xl mx-auto h-full flex items-center justify-end">
 
-          {/* Left Side */}
-          <div className="flex items-center space-x-3 h-full">
-            <button
-              onClick={() => router.back()}
-              className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-
-            <a
-              href="/dashboard/ai-helpers"
-              className="relative flex items-center h-8 cursor-pointer"
-            >
-              <Image
-                src="/images/nexora.png"
-                alt="Nexora AI Logo"
-                width={120}
-                height={40}
-                className="object-contain"
-              />
-            </a>
-          </div>
-
-          {/* Profile */}
+          {/* Profile Dropdown Container (Top Right) */}
           <div className="relative" ref={dropdownRef}>
             <button
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center space-x-2 p-1.5 rounded-full hover:bg-slate-100 transition focus:outline-none"
+              onClick={() => setIsProfileOpen((prev) => !prev)}
+              className="flex items-center space-x-2.5 p-1.5 rounded-full hover:bg-slate-100 transition focus:outline-none"
             >
               {profile.image ? (
                 <img
@@ -434,9 +419,7 @@ export default function AIHelpersPage() {
                 />
               ) : (
                 <div className="w-9 h-9 rounded-full bg-indigo-600 text-white font-semibold flex items-center justify-center text-sm shadow-sm">
-                  {profile.name
-                    ? profile.name.charAt(0).toUpperCase()
-                    : "U"}
+                  {profile.name ? profile.name.charAt(0).toUpperCase() : "U"}
                 </div>
               )}
 
@@ -444,8 +427,43 @@ export default function AIHelpersPage() {
                 {profile.name}
               </span>
 
-              <ChevronDown className="w-4 h-4 text-slate-500" />
+              <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
             </button>
+
+            {/* Dropdown Menu Overlay */}
+            {isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="px-4 py-3 border-b border-slate-100">
+                  <p className="text-sm font-semibold text-slate-900 truncate">{profile.name}</p>
+                  {profile.email && (
+                    <p className="text-xs text-slate-500 truncate mt-0.5">{profile.email}</p>
+                  )}
+                </div>
+
+                <div className="py-1">
+                  <button
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      router.push('/settings');
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition"
+                  >
+                    <Settings className="w-4 h-4 text-slate-400" />
+                    <span>Settings</span>
+                  </button>
+                </div>
+
+                <div className="border-t border-slate-100 pt-1">
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition font-medium"
+                  >
+                    <LogOut className="w-4 h-4 text-red-500" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
