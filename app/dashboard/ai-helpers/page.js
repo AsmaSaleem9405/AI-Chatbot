@@ -5,20 +5,31 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/app/utils/supabase/client';
 import { 
   Pencil, GraduationCap, Music, BookOpen, Mail, UserCheck, 
-  Heart, Smile, ArrowLeft, Send, Sparkles, X, Loader2, 
-  Code, Briefcase, Bot, Search, LogOut, ChevronDown, Zap 
+  Heart, ArrowLeft, Send, Sparkles, X, Loader2, 
+  Code, Briefcase, Bot, Search, LogOut, ChevronDown,
+  Stethoscope, Share2, Dumbbell,
+  FileText, Cpu
 } from 'lucide-react';
 
-const CATEGORIES = ['All', 'Writing', 'Business', 'Mental Health', 'Coding', 'Productivity'];
+const CATEGORIES = [
+  'All', 
+  'Writing', 
+  'Business', 
+  'Medical & Health', 
+  'Coding & Tech', 
+  'Productivity', 
+  'Marketing'
+];
 
 const HELPERS = [
+  // --- WRITING (4) ---
   {
     id: 'essay-writer',
     title: 'Essay Writer',
     category: 'Writing',
     description: 'Craft compelling essays effortlessly.',
     icon: Pencil,
-    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are an expert Essay Writer. Help the user draft, outline, and refine well-structured essays.'
   },
   {
@@ -27,16 +38,16 @@ const HELPERS = [
     category: 'Writing',
     description: 'Get structured, research-backed academic content.',
     icon: GraduationCap,
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are an Academic Writing Specialist. Provide scholarly, well-formatted content.'
   },
   {
     id: 'lyrics-songs',
-    title: 'Lyrics and Songs',
+    title: 'Lyrics & Songs',
     category: 'Writing',
     description: 'Turn your ideas into catchy and meaningful lyrics.',
     icon: Music,
-    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are a creative Songwriter and Lyricist.'
   },
   {
@@ -45,25 +56,27 @@ const HELPERS = [
     category: 'Writing',
     description: 'Create engaging and immersive stories in seconds.',
     icon: BookOpen,
-    image: 'https://images.unsplash.com/photo-1474939557375-0047f6e8178f?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1474939557375-0047f6e8178f?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are a Master Storyteller.'
   },
+
+  // --- BUSINESS (3) ---
   {
     id: 'email-creator',
     title: 'Email Creator',
     category: 'Business',
     description: 'Write professional and polished emails instantly.',
     icon: Mail,
-    image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are an Executive Communication Expert.'
   },
   {
     id: 'interview-coach',
     title: 'Interview Coach',
     category: 'Business',
-    description: 'Ace your interviews with expert tips and practice.',
+    description: 'Ace your interviews with expert tips and mock practice.',
     icon: UserCheck,
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are an Experienced Technical & HR Interviewer.'
   },
   {
@@ -72,44 +85,79 @@ const HELPERS = [
     category: 'Business',
     description: 'Structure startup pitches that captivate investors.',
     icon: Briefcase,
-    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are a VC Investment Analyst.'
+  },
+
+  // --- MEDICAL & HEALTH (3) ---
+  {
+    id: 'medical-consultant',
+    title: 'Medical Assistant',
+    category: 'Medical & Health',
+    description: 'Understand medical terms, symptoms, and health advice.',
+    icon: Stethoscope,
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&auto=format&fit=crop&q=80',
+    systemPrompt: 'You are an informative AI Medical Assistant.'
+  },
+  {
+    id: 'fitness-coach',
+    title: 'Workout Coach',
+    category: 'Medical & Health',
+    description: 'Get custom workout routines and fitness advice.',
+    icon: Dumbbell,
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80',
+    systemPrompt: 'You are a certified Personal Trainer.'
   },
   {
     id: 'mindful-mentor',
     title: 'Mindful Mentor',
-    category: 'Mental Health',
+    category: 'Medical & Health',
     description: 'Find clarity and calm with empathetic guidance.',
     icon: Heart,
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are an empathetic Mindful Guide.'
   },
-  {
-    id: 'mood-booster',
-    title: 'Mood Booster',
-    category: 'Mental Health',
-    description: 'Get uplifting words and positivity when needed.',
-    icon: Smile,
-    image: 'https://images.unsplash.com/photo-1499209974431-9dac3ada00d7?w=400&auto=format&fit=crop&q=60',
-    systemPrompt: 'You are a Positive Mindset Coach.'
-  },
+
+  // --- CODING & TECH (2) ---
   {
     id: 'code-debugger',
     title: 'Code Debugger',
-    category: 'Coding',
-    description: 'Fix bugs and optimize code instantly.',
+    category: 'Coding & Tech',
+    description: 'Fix bugs and optimize code across any programming language.',
     icon: Code,
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=60',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are a Senior Software Engineer.'
   },
   {
-    id: 'time-planner',
-    title: 'Daily Planner',
+    id: 'tech-architect',
+    title: 'System Architect',
+    category: 'Coding & Tech',
+    description: 'Design database schemas and software systems.',
+    icon: Cpu,
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80',
+    systemPrompt: 'You are a Principal Software Architect.'
+  },
+
+  // --- MARKETING (1) ---
+  {
+    id: 'social-media-strategist',
+    title: 'Social Media Manager',
+    category: 'Marketing',
+    description: 'Generate viral content ideas, captions, and posts.',
+    icon: Share2,
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&auto=format&fit=crop&q=80',
+    systemPrompt: 'You are a Social Media Content Strategist.'
+  },
+
+  // --- PRODUCTIVITY (1) ---
+  {
+    id: 'resume-builder',
+    title: 'Resume & CV Builder',
     category: 'Productivity',
-    description: 'Organize tasks and boost your productivity daily.',
-    icon: Zap,
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&auto=format&fit=crop&q=60',
-    systemPrompt: 'You are an Elite Productivity Coach.'
+    description: 'Craft ATS-friendly resumes tailored to your target job.',
+    icon: FileText,
+    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&auto=format&fit=crop&q=80',
+    systemPrompt: 'You are an Executive Resume Writer.'
   }
 ];
 
@@ -121,11 +169,9 @@ export default function AIHelpersPage() {
   const [activeModal, setActiveModal] = useState(null);
   const [promptInput, setPromptInput] = useState('');
   
-  // Dynamic Chat History
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Dynamic Profile State
   const [profile, setProfile] = useState({
     name: 'User',
     email: '',
@@ -139,10 +185,8 @@ export default function AIHelpersPage() {
   const chatEndRef = useRef(null);
   const [generalSearch, setGeneralSearch] = useState('');
 
-  // Fetch user profile from Supabase & LocalStorage
   useEffect(() => {
     async function fetchUserProfile() {
-      // 1. First check LocalStorage for immediate rendering
       const savedProfile = localStorage.getItem('user_profile');
       if (savedProfile) {
         try {
@@ -159,7 +203,6 @@ export default function AIHelpersPage() {
         }
       }
 
-      // 2. Fall back to / sync with Supabase profiles table
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
@@ -187,12 +230,10 @@ export default function AIHelpersPage() {
     fetchUserProfile();
   }, [supabase]);
 
-  // Auto-scroll chat window to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages, isLoading]);
 
-  // Handle outside click for profile dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -216,15 +257,12 @@ export default function AIHelpersPage() {
     setChatMessages([]);
   };
 
-  // Main chat submission handler
   const sendMessage = async (userText) => {
     if (!userText.trim() || isLoading) return;
 
-    // 1. Append user message to history
     const updatedMessages = [...chatMessages, { role: 'user', content: userText }];
     setChatMessages(updatedMessages);
     
-    // 2. Clear input immediately
     setPromptInput('');
     setIsLoading(true);
 
@@ -241,7 +279,6 @@ export default function AIHelpersPage() {
 
       const data = await res.json();
       if (res.ok) {
-        // Keep previous responses and add new response
         setChatMessages((prev) => [...prev, { role: 'assistant', content: data.result }]);
       } else {
         setChatMessages((prev) => [
@@ -272,19 +309,18 @@ export default function AIHelpersPage() {
       id: 'general-chat',
       title: 'General AI Assistant',
       category: 'Chat & Search',
+      description: 'Ask questions or explore ideas with a versatile AI.',
+      icon: Bot,
+      image: '',
       systemPrompt: 'You are a knowledgeable and versatile AI assistant.'
     };
 
     setActiveModal(generalHelper);
     const initialQuery = generalSearch;
     
-    // Clear search bar
     setGeneralSearch('');
-    
-    // Initialize message log
     setChatMessages([{ role: 'user', content: initialQuery }]);
     
-    // Fetch initial AI response
     setTimeout(() => {
       sendMessage(initialQuery);
     }, 100);
@@ -303,11 +339,12 @@ export default function AIHelpersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] text-slate-900 font-sans antialiased">
+    /* FIXED CONTAINMENT: forcing height & overflow-y-auto here overrides blocked layout-level scrolling */
+    <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
       {/* NAVBAR */}
-      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8 py-3">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8 py-3">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center space-x-3">
             <button onClick={() => router.back()} className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition">
@@ -319,7 +356,6 @@ export default function AIHelpersPage() {
             </h1>
           </div>
 
-          {/* Dynamic Profile Dropdown Header */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -342,9 +378,8 @@ export default function AIHelpersPage() {
               <ChevronDown className="w-4 h-4 text-slate-500" />
             </button>
 
-            {/* Profile Menu Dropdown */}
             {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-50">
                 <div className="flex items-center space-x-3 pb-3 border-b border-slate-100">
                   {profile.image ? (
                     <img 
@@ -388,9 +423,9 @@ export default function AIHelpersPage() {
       </header>
 
       {/* MAIN CONTAINER */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-8 py-6 space-y-8 pb-16">
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-6 space-y-8 pb-32">
         
-        {/* NEW CHAT / GENERAL SEARCH BAR */}
+        {/* NEW CHAT / SEARCH BAR */}
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded-2xl shadow-sm">
           <div className="bg-white rounded-[15px] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-3">
             <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hidden sm:block">
@@ -419,7 +454,7 @@ export default function AIHelpersPage() {
         </div>
 
         {/* CATEGORY FILTER PILLS */}
-        <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center space-x-2 overflow-x-auto pb-2 pt-1 no-scrollbar">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
@@ -446,11 +481,12 @@ export default function AIHelpersPage() {
 
             return (
               <div key={catName} className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                  {catName === 'Writing' ? 'Writing Skills' : catName === 'Business' ? 'Business Helper' : catName}
+                <h2 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                  <span>{catName}</span>
+                  <span className="text-xs font-normal text-slate-400">({groupHelpers.length})</span>
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {groupHelpers.map((helper) => {
                     const Icon = helper.icon;
                     return (
@@ -459,18 +495,19 @@ export default function AIHelpersPage() {
                         onClick={() => handleOpenModal(helper)}
                         className="bg-white border border-slate-100 rounded-3xl p-5 flex items-start space-x-4 shadow-sm hover:shadow-md hover:border-indigo-100 transition duration-200 cursor-pointer group"
                       >
-                        <div className="relative w-20 h-20 rounded-2xl overflow-hidden shrink-0 bg-slate-100">
-                          {helper.image ? (
+                        {/* Container with Icon fallback if image errors */}
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 bg-indigo-50 flex items-center justify-center">
+                          {helper.image && (
                             <img 
                               src={helper.image} 
                               alt={helper.title} 
-                              className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                              className="w-full h-full object-cover group-hover:scale-105 transition duration-300 relative z-10"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
                             />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-600">
-                              <Icon className="w-8 h-8" />
-                            </div>
                           )}
+                          <Icon className="w-8 h-8 text-indigo-600 absolute" />
                         </div>
 
                         <div className="flex-1 min-w-0">
@@ -493,11 +530,11 @@ export default function AIHelpersPage() {
 
       {/* CONTINUOUS AI CHAT WORKSPACE MODAL */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-2xl h-[80vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100 animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-2xl h-[85vh] sm:h-[80vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100">
             
             {/* Modal Header */}
-            <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
                   {activeModal.icon ? <activeModal.icon className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
@@ -520,7 +557,7 @@ export default function AIHelpersPage() {
               {chatMessages.length === 0 ? (
                 <div className="text-center py-12 text-slate-400 space-y-2">
                   <Sparkles className="w-8 h-8 mx-auto text-indigo-400 opacity-60" />
-                  <p className="text-sm font-medium text-slate-600">What would you like to build or generate?</p>
+                  <p className="text-sm font-medium text-slate-600">What would you like to ask or build today?</p>
                   <p className="text-xs text-slate-400">Type your request below to begin.</p>
                 </div>
               ) : (
@@ -560,7 +597,7 @@ export default function AIHelpersPage() {
             </div>
 
             {/* Input Bar Form */}
-            <form onSubmit={handleModalSubmit} className="p-4 border-t border-slate-100 bg-white flex items-center space-x-2">
+            <form onSubmit={handleModalSubmit} className="p-4 border-t border-slate-100 bg-white flex items-center space-x-2 shrink-0">
               <input
                 type="text"
                 placeholder={`Ask ${activeModal.title}...`}
@@ -571,7 +608,7 @@ export default function AIHelpersPage() {
               <button
                 type="submit"
                 disabled={isLoading || !promptInput.trim()}
-                className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-5 py-3 rounded-xl font-medium text-sm flex items-center justify-center transition shadow-sm"
+                className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-5 py-3 rounded-xl font-medium text-sm flex items-center justify-center transition shadow-sm shrink-0"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>
