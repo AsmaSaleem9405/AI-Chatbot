@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -68,7 +69,7 @@ const HELPERS = [
     category: 'Writing',
     description: 'Create engaging and immersive stories in seconds.',
     icon: BookOpen,
-    image: 'https://images.unsplash.com/photo-1474939557375-0047f6e8178f?w=400&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&auto=format&fit=crop&q=80',
     systemPrompt: 'You are a Master Storyteller.',
     suggestions: [
       { title: 'Sci-Fi Plot Twist', desc: 'Brainstorm a mind-bending story conclusion.' },
@@ -391,85 +392,64 @@ export default function AIHelpersPage() {
   };
 
   return (
+    
     <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
       {/* NAVBAR */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8 py-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          
-          <div className="flex items-center space-x-3">
-            <button onClick={() => router.back()} className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition">
+      <header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto h-full flex items-center justify-between">
+
+          {/* Left Side */}
+          <div className="flex items-center space-x-3 h-full">
+            <button
+              onClick={() => router.back()}
+              className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition"
+            >
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-600" />
-              AI Helpers
-            </h1>
+
+            <a
+              href="/dashboard/ai-helpers"
+              className="relative flex items-center h-8 cursor-pointer"
+            >
+              <Image
+                src="/images/nexora.png"
+                alt="Nexora AI Logo"
+                width={120}
+                height={40}
+                className="object-contain"
+              />
+            </a>
           </div>
 
+          {/* Profile */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               className="flex items-center space-x-2 p-1.5 rounded-full hover:bg-slate-100 transition focus:outline-none"
             >
               {profile.image ? (
-                <img 
-                  src={profile.image} 
-                  alt={profile.name} 
+                <img
+                  src={profile.image}
+                  alt={profile.name}
                   className="w-9 h-9 rounded-full object-cover border border-indigo-100 shadow-sm"
                 />
               ) : (
                 <div className="w-9 h-9 rounded-full bg-indigo-600 text-white font-semibold flex items-center justify-center text-sm shadow-sm">
-                  {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
+                  {profile.name
+                    ? profile.name.charAt(0).toUpperCase()
+                    : "U"}
                 </div>
               )}
+
               <span className="text-sm font-medium text-slate-700 hidden sm:inline-block">
                 {profile.name}
               </span>
+
               <ChevronDown className="w-4 h-4 text-slate-500" />
             </button>
-
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-50">
-                <div className="flex items-center space-x-3 pb-3 border-b border-slate-100">
-                  {profile.image ? (
-                    <img 
-                      src={profile.image} 
-                      alt={profile.name} 
-                      className="w-11 h-11 rounded-full object-cover border border-indigo-100"
-                    />
-                  ) : (
-                    <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-600 font-bold flex items-center justify-center text-lg">
-                      {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                  )}
-                  <div className="overflow-hidden">
-                    <p className="font-semibold text-slate-900 truncate">{profile.name}</p>
-                    <p className="text-xs text-slate-500 truncate">{profile.email || 'No email provided'}</p>
-                  </div>
-                </div>
-
-                <div className="py-3 space-y-2 text-xs text-slate-600 border-b border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Gender:</span>
-                    <span className="font-medium text-slate-700">{profile.gender || 'Not set'}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Date of Birth:</span>
-                    <span className="font-medium text-slate-700">{profile.dob || 'Not set'}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleLogout}
-                  className="w-full mt-2 flex items-center justify-center space-x-2 text-red-600 hover:bg-red-50 p-2.5 rounded-xl text-xs font-semibold transition"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
-                </button>
-              </div>
-            )}
           </div>
+
         </div>
       </header>
 
@@ -582,7 +562,7 @@ export default function AIHelpersPage() {
       {activeModal && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col h-full w-full">
           
-          {/* Top Bar Header */}
+          {/* Top Bar Header with Logo */}
           <div className="px-4 py-3 sm:px-8 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0 max-w-5xl mx-auto w-full">
             <div className="flex items-center space-x-3">
               <button 
@@ -591,9 +571,22 @@ export default function AIHelpersPage() {
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                {activeModal.title}
-              </h2>
+
+              <div className="flex items-center space-x-3">
+                <a href="/dashboard/ai-helpers" className="flex items-center shrink-0">
+                  <Image
+                    src="/images/nexora.png"
+                    alt="Nexora AI Logo"
+                    width={100}
+                    height={32}
+                    className="object-contain"
+                  />
+                </a>
+                <span className="text-slate-300 hidden sm:inline">|</span>
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight truncate">
+                  {activeModal.title}
+                </h2>
+              </div>
             </div>
             
             <button 
@@ -610,7 +603,7 @@ export default function AIHelpersPage() {
             <div className="space-y-4 flex-1">
               {chatMessages.length === 0 ? (
                 <div className="h-full flex flex-col justify-end pb-4">
-                  {/* Suggestion Cards Container matching screenshot design */}
+                  {/* Suggestion Cards Container */}
                   {activeModal.suggestions && activeModal.suggestions.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                       {activeModal.suggestions.map((item, idx) => (
@@ -694,7 +687,7 @@ export default function AIHelpersPage() {
 
           </div>
 
-          {/* Bottom Fixed Input Box Container matching design */}
+          {/* Bottom Fixed Input Box */}
           <div className="w-full bg-white border-t border-slate-100 p-3 sm:p-4 shrink-0">
             <form onSubmit={handleModalSubmit} className="max-w-3xl mx-auto flex items-center space-x-2">
               <input
