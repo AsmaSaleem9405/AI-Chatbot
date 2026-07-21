@@ -104,7 +104,7 @@ export default function ProfileSetup() {
         <button 
           type="button" 
           onClick={() => router.back()} 
-          className="text-gray-800 self-start mb-5 p-1.5 hover:bg-gray-100 rounded-full transition-colors duration-200"
+          className="text-black self-start mb-5 p-1.5 hover:bg-gray-100 rounded-full transition-colors duration-200"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
@@ -112,10 +112,10 @@ export default function ProfileSetup() {
         {/* Form Body Setup */}
         <form onSubmit={handleSubmit} className="w-full flex flex-col">
           
-          <h1 className="text-2xl font-extrabold text-gray-950 tracking-tight mb-1">
+          <h1 className="text-2xl font-extrabold text-black tracking-tight mb-1">
             Finish up your profile!
           </h1>
-          <p className="text-gray-500 text-sm mb-8">
+          <p className="text-black text-sm mb-8">
             Complete your profile before to jump in!
           </p>
 
@@ -152,7 +152,7 @@ export default function ProfileSetup() {
               required
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className="w-full px-4 py-4 text-gray-880 bg-white placeholder-gray-400 focus:outline-hidden text-[15px]"
+              className="w-full px-4 py-4 text-black bg-white placeholder-gray focus:outline-hidden text-[15px]"
             />
             <input
               type="email"
@@ -160,21 +160,21 @@ export default function ProfileSetup() {
               required
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className="w-full px-4 py-4 text-gray-880 bg-white placeholder-gray-400 focus:outline-hidden text-[15px]"
+              className="w-full px-4 py-4 text-black bg-white placeholder-gray focus:outline-hidden text-[15px]"
             />
             <div className="relative w-full bg-white">
               <select
                 required
                 value={formData.gender}
                 onChange={(e) => setFormData({...formData, gender: e.target.value})}
-                className="w-full px-4 py-4 text-gray-880 bg-transparent placeholder-gray-400 focus:outline-hidden text-[15px] appearance-none cursor-pointer pr-10"
+                className="w-full px-4 py-4 text-black bg-transparent placeholder-gray focus:outline-hidden text-[15px] appearance-none cursor-pointer pr-10"
               >
-                <option value="" disabled hidden>Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
+                <option value="" disabled hidden className="text-black">Gender</option>
+                <option value="Male" className="text-black">Male</option>
+                <option value="Female" className="text-black">Female</option>
+                <option value="Other" className="text-black">Other</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-black">
                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                 </svg>
@@ -188,7 +188,7 @@ export default function ProfileSetup() {
               required
               value={formData.dob}
               onChange={(e) => setFormData({...formData, dob: e.target.value})}
-              className="w-full px-4 py-4 text-gray-880 bg-white placeholder-gray-400 focus:outline-hidden text-[15px]"
+              className="w-full px-4 py-4 text-black bg-white placeholder-gray focus:outline-hidden text-[15px]"
             />
           </div>
 

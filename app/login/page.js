@@ -36,7 +36,7 @@ export default function Login() {
         setErrorMsg(error.message);
       }
     } else {
-      router.push('/dashboard');
+      router.push('/profile-setup');
     }
   };
 
