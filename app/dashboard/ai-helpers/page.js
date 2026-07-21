@@ -1,6 +1,6 @@
 'use client';
-import Image from "next/image";
 
+import Image from "next/image";
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/app/utils/supabase/client';
@@ -9,7 +9,7 @@ import {
   Heart, ArrowLeft, Send, Sparkles, X, Loader2, 
   Code, Briefcase, Bot, Search, LogOut, ChevronDown,
   Stethoscope, Share2, Dumbbell,
-  FileText, Cpu
+  FileText, Cpu, Plus
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -379,20 +379,18 @@ export default function AIHelpersPage() {
     sendMessage(initialQuery, [], generalHelper.systemPrompt);
   };
 
+  const handleResetChat = () => {
+    setChatMessages([]);
+    setPromptInput('');
+  };
+
   const closeModal = () => {
     setActiveModal(null);
     setPromptInput('');
     setChatMessages([]);
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    localStorage.removeItem('user_profile');
-    router.push('/login');
-  };
-
   return (
-    
     <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
       {/* NAVBAR */}
@@ -558,11 +556,11 @@ export default function AIHelpersPage() {
         </div>
       </main>
 
-      {/* FULL-SCREEN CHAT INTERFACE (MOBILE & LAPTOP RESPONSIVE) */}
+      {/* FULL-SCREEN CHAT INTERFACE */}
       {activeModal && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col h-full w-full">
           
-          {/* Top Bar Header with Logo */}
+          {/* Top Bar Header with Logo & Controls */}
           <div className="px-4 py-3 sm:px-8 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0 max-w-5xl mx-auto w-full">
             <div className="flex items-center space-x-3">
               <button 
@@ -589,12 +587,25 @@ export default function AIHelpersPage() {
               </div>
             </div>
             
-            <button 
-              onClick={closeModal}
-              className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition hidden sm:block"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Action Buttons: New Chat & Close */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleResetChat}
+                className="flex items-center space-x-1.5 px-3 py-1.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 rounded-xl text-xs sm:text-sm font-medium transition"
+                title="Start New Chat"
+              >
+                <Plus className="w-4 h-4" />
+                <span>New Chat</span>
+              </button>
+
+              <button 
+                onClick={closeModal}
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition hidden sm:block"
+                title="Close Modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Chat Messages Body */}
