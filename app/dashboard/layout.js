@@ -1,5 +1,6 @@
 // app/(dashboard)/layout.js
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,9 +26,16 @@ export default function DashboardLayout({ children }) {
         bottom-0 left-0 right-0 border-t py-2 px-6
         md:top-0 md:bottom-auto md:right-auto md:w-64 md:h-screen md:border-t-0 md:border-r md:p-6 md:flex md:flex-col md:justify-start"
       >
-        <div className="hidden md:block mb-8 px-2 font-bold text-lg text-gray-800">
-          AI Chatbot
-        </div>
+       
+  <Link href="/" className="inline-block">
+    <Image
+      src="/images/nexora.png"
+      alt="AI Chatbot Logo"
+      width={190}
+      height={190}
+      className="object-contain -mt-12 -ml-4"
+    />
+  </Link>
 
         <ul className="flex items-center justify-between md:flex-col md:items-start md:justify-start md:space-y-4">
           {navItems.map((item) => {
