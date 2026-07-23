@@ -1,70 +1,82 @@
 import Image from "next/image";
-import Link from "next/link"; // Imported for routing
+import Link from "next/link";
 
 export default function WelcomePage() {
   return (
-    // min-h-screen ensures the page takes up the whole screen on mobile, 
-    // while h-screen on md devices locks it to a single view.
-    <main className="min-h-screen md:h-screen w-full bg-white flex flex-col md:flex-row m-0 p-0 overflow-x-hidden md:overflow-hidden">
-      
-      {/* Left Column: Fixed to 40% height on mobile viewports so it doesn't crowd out the text */}
-      <div className="w-full md:w-1/2 bg-[#EEF2FD] p-6 md:p-12 flex items-center justify-center relative h-[40vh] md:h-full overflow-hidden">
-        
-        {/* Abstract Background Shapes - Hidden on small mobile screens to keep it clean, visible on sm and up */}
-        <div className="hidden sm:block absolute top-8 -left-5 w-48 h-12 bg-[#E3E8F8] rounded-full opacity-70"></div>
-        <div className="hidden sm:block absolute top-20 left-10 w-64 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
-        <div className="hidden sm:block absolute top-44 left-4 w-52 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
-        <div className="hidden sm:block absolute bottom-20 left-16 w-60 h-16 bg-[#E3E8F8] rounded-2xl opacity-60"></div>
-        <div className="hidden sm:block absolute bottom-6 left-10 w-44 h-12 bg-[#E3E8F8] rounded-full opacity-50"></div>
+    <>
+      {/* Standard CSS injection compatible with Next.js Server Components */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes slowSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-slow-spin {
+          animation: slowSpin 25s linear infinite;
+        }
+      `}} />
 
-        {/* Centered Decorative Logo Ring Container */}
-        <div className="relative z-10 flex items-center justify-center w-full h-full">
-          {/* Managed Next.js image scaling by tying it to responsive max-widths */}
-          <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-[320px] lg:max-w-[400px] aspect-square">
-            <Image
-              src="/images/logo-1.png"
-              alt="Logo"
-              fill
-              className="object-contain"
-              priority
-            />
+      <main className="min-h-screen md:h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row m-0 p-0 overflow-x-hidden md:overflow-hidden selection:bg-[#3F37C9] selection:text-white">
+        
+        {/* Left Column: Gradient background with rotating logo */}
+        <div className="w-full md:w-1/2 bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] p-6 md:p-12 flex items-center justify-center relative h-[40vh] md:h-full overflow-hidden border-b md:border-b-0 md:border-r border-gray-100">
+          
+          {/* Subtle Ambient Glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(63,55,201,0.06)_0,transparent_70%)] pointer-events-none"></div>
+
+          {/* Minimalist Professional Geometric Accent Rings */}
+          <div className="absolute -top-12 -left-12 w-64 h-64 rounded-full border border-indigo-200/40 pointer-events-none"></div>
+          <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full border border-indigo-200/40 pointer-events-none"></div>
+
+          {/* Centered Decorative Logo Ring Container with a clean entrance */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full">
+            {/* Logo container with slow spin animation */}
+            <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[300px] lg:max-w-[380px] aspect-square transition-transform duration-700 hover:scale-[1.02] drop-shadow-[0_10px_30px_rgba(63,55,201,0.07)] animate-slow-spin">
+              <Image
+                src="/images/logo-1.png"
+                alt="NEXORA AI Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Right Column: Content & Actions filling the remaining screen space smoothly */}
-      <div className="w-full md:w-1/2 bg-white px-6 py-8 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start h-[60vh] md:h-full">
-        
-        {/* Text Content */}
-        <div className="text-center md:text-left max-w-sm sm:max-w-md w-full">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
-            Insert content here
-          </h1>
-          <p className="text-gray-500 mt-4 text-sm sm:text-base lg:text-lg leading-relaxed">
-            Create your account in seconds and unlock the full potential of
-            AI-powered conversations.
-          </p>
+        {/* Right Column: Content & Actions */}
+        <div className="w-full md:w-1/2 bg-white px-6 py-10 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start h-[60vh] md:h-full relative">
+          
+          {/* Professional Text Content */}
+          <div className="text-center md:text-left max-w-sm sm:max-w-md w-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EEF2FD] text-[#3F37C9] text-xs font-semibold tracking-wider uppercase mb-5 border border-[#E0E7FF]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3F37C9]"></span>
+              NEXORA AI
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-[1.15]">
+              Where conversations meet intelligence.
+            </h1>
+            <p className="text-gray-500 mt-4 text-sm sm:text-base leading-relaxed font-normal">
+              Experience seamless, context-aware AI interactions designed to streamline your workflow and elevate your productivity with NEXORA AI.
+            </p>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="mt-8 md:mt-10 space-y-3.5 max-w-sm sm:max-w-md w-full">
+            <Link href="/login" className="block w-full">
+              <button className="w-full h-12 sm:h-13 rounded-xl bg-[#3F37C9] text-white font-medium text-sm sm:text-base shadow-sm hover:bg-[#372FB5] active:scale-[0.99] transition-all duration-150">
+                Sign In to Account
+              </button>
+            </Link>
+
+            <Link href="/signup" className="block w-full">
+              <button className="w-full h-12 sm:h-13 rounded-xl bg-white text-gray-700 font-medium text-sm sm:text-base border border-gray-200 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300 active:scale-[0.99] transition-all duration-150">
+                Create Free Account
+              </button>
+            </Link>
+          </div>
+
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-8 md:mt-12 space-y-3.5 max-w-sm sm:max-w-md w-full">
-          {/* Link to Login page */}
-          <Link href="/login" className="block w-full">
-            <button className="w-full h-12 sm:h-14 rounded-full bg-[#3F37C9] text-white font-semibold shadow-lg shadow-indigo-600/10 hover:bg-[#372FB5] hover:shadow-xl hover:shadow-indigo-600/20 active:scale-[0.99] transition-all duration-200">
-              Log in
-            </button>
-          </Link>
-
-          {/* Link to Signup page */}
-          <Link href="/signup" className="block w-full">
-            <button className="w-full h-12 sm:h-14 rounded-full bg-[#F0F3FF] text-[#3F37C9] font-semibold hover:bg-[#E5E9FA] active:scale-[0.99] transition-all duration-200">
-              Sign Up
-            </button>
-          </Link>
-        </div>
-
-      </div>
-
-    </main>
+      </main>
+    </>
   );
 }
