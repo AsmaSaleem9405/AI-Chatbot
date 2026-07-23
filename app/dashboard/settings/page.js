@@ -15,18 +15,18 @@ const settingsSections = [
   {
     title: 'Account',
     items: [
-      { name: 'Personal info', icon: User, href: '#' },
-      { name: 'Upgrade to Premium', icon: Sparkles, href: '#' },
-      { name: 'Data controls', icon: ShieldCheck, href: '#' },
-      { name: 'Archived chats', icon: Archive, href: '#' },
+      { name: 'Personal info', icon: User, href: '/dashboard/settings/personal-info' },
+      { name: 'Upgrade to Premium', icon: Sparkles, href: '/dashboard/settings/premium' },
+      { name: 'Data controls', icon: ShieldCheck, href: '/dashboard/settings/data-controls' },
+      { name: 'Archived chats', icon: Archive, href: '/dashboard/settings/archived-chats' },
     ],
   },
   {
     title: 'About',
     items: [
-      { name: 'Help center', icon: HelpCircle, href: '#' },
-      { name: 'Terms of Use', icon: FileText, href: '#' },
-      { name: 'Privacy Policy', icon: Lock, href: '#' },
+      { name: 'Help center', icon: HelpCircle, href: '/dashboard/help' },
+      { name: 'Terms of Use', icon: FileText, href: '/dashboard/terms' },
+      { name: 'Privacy Policy', icon: Lock, href: '/dashboard/privacy' },
     ],
   },
 ];
@@ -34,7 +34,7 @@ const settingsSections = [
 export default function SettingsPage() {
   return (
     <div className="h-screen overflow-y-auto bg-white text-zinc-900 flex flex-col">
-      {/* Removed max-width restriction so it utilizes full screen width with comfortable padding */}
+      {/* Main Container - Full screen width utilization with comfortable padding and scroll enabled */}
       <main className="w-full px-6 sm:px-12 py-10 flex-grow pb-28">
         
         {/* Header */}
@@ -81,7 +81,7 @@ export default function SettingsPage() {
           <div className="pt-2 pb-6 max-w-3xl">
             <div className="space-y-1">
               <a
-                href="#"
+                href="/login"
                 className="flex items-center justify-between py-3.5 px-3 hover:bg-red-50 rounded-xl transition-colors group text-zinc-800"
               >
                 <div className="flex items-center space-x-3.5">
