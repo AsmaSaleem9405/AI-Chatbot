@@ -13,21 +13,10 @@ export default function DataControlsPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // 1. EXPORT PROFILE AND CHAT HISTORY AS DOCX
+  // 1. EXPORT ONLY CHAT HISTORY AS DOCX
   const handleExportData = async () => {
     setIsExporting(true);
     try {
-      // Fetch profile data from your 'profiles' table in Supabase
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .limit(1)
-        .single();
-
-      if (profileError && profileError.code !== 'PGRST116') {
-        console.error('Profile fetch error:', profileError);
-      }
-
       // Fetch chat history from your 'chat_history' table
       const { data: chatData, error: chatError } = await supabase
         .from('chat_history')
@@ -35,45 +24,13 @@ export default function DataControlsPage() {
 
       if (chatError) throw chatError;
 
-      // Extract user details dynamically from the 'profiles' table row
-      // (Modify column names here if your table uses something specific like 'first_name')
-      const profileName = profileData?.full_name || profileData?.name || profileData?.username || 'Valued User';
-      const profileEmail = profileData?.email || 'N/A';
-      const additionalInfo = profileData?.bio || profileData?.role || '';
-
-      // Build the Word Document (.docx) structure
+      // Build the Word Document (.docx) structure containing only chat history
       const docChildren = [
         new Paragraph({
-          text: 'User Account & Chat History Export',
+          text: 'Chat History Export',
           heading: HeadingLevel.TITLE,
         }),
         new Paragraph({ text: '' }), // Spacer
-        
-        // Profile Section Heading
-        new Paragraph({
-          text: 'Profile Information',
-          heading: HeadingLevel.HEADING_1,
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: 'Name: ', bold: true }),
-            new TextRun(profileName),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: 'Email: ', bold: true }),
-            new TextRun(profileEmail),
-          ],
-        }),
-        ...(additionalInfo ? [
-          new Paragraph({
-            children: [
-              new TextRun({ text: 'Details: ', bold: true }),
-              new TextRun(additionalInfo),
-            ],
-          })
-        ] : []),
         new Paragraph({
           children: [
             new TextRun({ text: 'Exported On: ', bold: true }),
@@ -81,10 +38,8 @@ export default function DataControlsPage() {
           ],
         }),
         new Paragraph({ text: '' }), // Spacer
-
-        // Chat History Section Heading
         new Paragraph({
-          text: 'Chat History Records',
+          text: 'Conversation Records',
           heading: HeadingLevel.HEADING_1,
         }),
       ];
@@ -125,13 +80,13 @@ export default function DataControlsPage() {
       const downloadUrl = URL.createObjectURL(blob);
       const downloadAnchor = document.createElement('a');
       downloadAnchor.href = downloadUrl;
-      downloadAnchor.download = `user_data_export_${Date.now()}.docx`;
+      downloadAnchor.download = `chat_history_export_${Date.now()}.docx`;
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
       URL.revokeObjectURL(downloadUrl);
 
-      alert('Your profile and chat history have been successfully exported as a Word document!');
+      alert('Your chat history has been successfully exported as a Word document!');
     } catch (err) {
       console.error('Export error:', err);
       alert('Failed to export data. Please check your database connection.');
@@ -184,10 +139,10 @@ export default function DataControlsPage() {
             <div className="space-y-1">
               <div className="flex items-center space-x-2 text-zinc-800 font-medium">
                 <Download className="w-5 h-5 text-indigo-600" />
-                <span>Export Account Data (Docx)</span>
+                <span>Export Chat History (Docx)</span>
               </div>
               <p className="text-sm text-zinc-500 max-w-md">
-                Download a formatted Word document containing your profile information and full chat history.
+                Download a formatted Word document containing only your chat history records.
               </p>
             </div>
             <button
