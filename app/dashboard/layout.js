@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
    
 
     { id: "history", label: "History", href: "/dashboard/history", icon: Clock },
-    { id: "settings", label: "Settings", href: "/settings", icon: Settings },
+    { id: "settings", label: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
 
   return (
