@@ -15,8 +15,7 @@ const settingsSections = [
   {
     title: 'Account',
     items: [
-      { name: 'Personal info', icon: User, href: '/dashboard/settings/personal-info' },
-      { name: 'Upgrade to Premium', icon: Sparkles, href: '/dashboard/settings/premium' },
+      { name: 'Personal info', icon: User, href: '/dashboard/personal-info' },
       { name: 'Data controls', icon: ShieldCheck, href: '/dashboard/data-controls' },
       { name: 'Archived chats', icon: Archive, href: '/dashboard/settings/archived-chats' },
     ],
