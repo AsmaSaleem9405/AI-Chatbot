@@ -1,84 +1,81 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+export const dynamic = "force-dynamic";
 
-  if (!supabaseUrl || !serviceRoleKey) {
-    throw new Error('Supabase environment variables are missing');
-  }
-
-  return createClient(supabaseUrl, serviceRoleKey);
-}
-
-// GET: Fetch all chat history
 export async function GET() {
   try {
-    const supabase = getSupabase();
+  const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
-    const { data, error } = await supabase
-      .from('chat_history')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 400 }
-      );
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error("Supabase environment variables are missing");
     }
 
-    return NextResponse.json(data, { status: 200 });
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-  } catch (err) {
-    console.error('GET history error:', err);
+    const { data, error } = await supabase
+      .from("chat_history")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("History GET Error:", error);
 
     return NextResponse.json(
-      { error: err.message || 'Internal Server Error' },
+      {
+        error: error.message || "Internal Server Error",
+      },
       { status: 500 }
     );
   }
 }
 
-// DELETE: Delete a specific history item or clear all
 export async function DELETE(request) {
   try {
-    const supabase = getSupabase();
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error("Supabase environment variables are missing");
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = searchParams.get("id");
 
     if (id) {
       const { error } = await supabase
-        .from('chat_history')
+        .from("chat_history")
         .delete()
-        .eq('id', id);
+        .eq("id", id);
 
       if (error) throw error;
-
     } else {
       const { error } = await supabase
-        .from('chat_history')
+        .from("chat_history")
         .delete()
-        .neq(
-          'id',
-          '00000000-0000-0000-0000-000000000000'
-        );
+        .neq("id", "00000000-0000-0000-0000-000000000000");
 
       if (error) throw error;
     }
 
-    return NextResponse.json(
-      { success: true },
-      { status: 200 }
-    );
-
-  } catch (err) {
-    console.error('DELETE history error:', err);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("History DELETE Error:", error);
 
     return NextResponse.json(
-      { error: err.message || 'Internal Server Error' },
+      {
+        error: error.message || "Internal Server Error",
+      },
       { status: 500 }
     );
   }
