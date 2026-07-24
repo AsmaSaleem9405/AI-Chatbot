@@ -82,55 +82,55 @@ export default function HelpCenterPage() {
   });
 
   return (
-    <div className="h-screen overflow-y-auto bg-white text-zinc-900 flex flex-col">
-      <main className="w-full px-6 sm:px-12 py-10 flex-grow pb-28">
+    <div className="h-screen overflow-y-auto bg-gradient-to-br from-zinc-50 via-white to-zinc-100 text-zinc-900 flex flex-col selection:bg-indigo-500 selection:text-white">
+      <main className="w-full px-6 sm:px-12 py-10 flex-grow pb-28 animate-fadeIn">
         
         {/* Header Title */}
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-900">
+        <div className="mb-6 transform transition-all duration-300">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent">
             Help Center
           </h1>
         </div>
 
         {/* Top Navigation Tabs (FAQ / Contact) */}
-        <div className="flex border-b border-zinc-200 mb-8 max-w-3xl">
+        <div className="flex border-b border-zinc-200/80 mb-8 max-w-3xl">
           <button
             onClick={() => setActiveTab('FAQ')}
-            className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition-colors relative ${
-              activeTab === 'FAQ' ? 'text-indigo-600' : 'text-zinc-500 hover:text-zinc-800'
+            className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition-all duration-300 relative ${
+              activeTab === 'FAQ' ? 'text-indigo-600 font-semibold' : 'text-zinc-500 hover:text-zinc-800'
             }`}
           >
             FAQ
             {activeTab === 'FAQ' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full shadow-sm shadow-indigo-200 animate-slideUp" />
             )}
           </button>
           <button
             onClick={() => setActiveTab('Contact')}
-            className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition-colors relative ${
-              activeTab === 'Contact' ? 'text-indigo-600' : 'text-zinc-500 hover:text-zinc-800'
+            className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition-all duration-300 relative ${
+              activeTab === 'Contact' ? 'text-indigo-600 font-semibold' : 'text-zinc-500 hover:text-zinc-800'
             }`}
           >
             Contact
             {activeTab === 'Contact' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full shadow-sm shadow-indigo-200 animate-slideUp" />
             )}
           </button>
         </div>
 
         {/* Tab Content: FAQ */}
         {activeTab === 'FAQ' && (
-          <div className="space-y-6 max-w-3xl">
+          <div className="space-y-6 max-w-3xl animate-fadeIn">
             
             {/* Search Bar */}
-            <div className="relative">
-              <Search className="w-5 h-5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <div className="relative group">
+              <Search className="w-5 h-5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors group-focus-within:text-indigo-600" />
               <input
                 type="text"
                 placeholder="Search for answers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-2xl text-sm text-zinc-900 focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full pl-11 pr-4 py-3 bg-white/80 backdrop-blur-sm border border-zinc-200/80 rounded-2xl text-sm text-zinc-900 shadow-sm shadow-zinc-100 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300"
               />
             </div>
 
@@ -140,10 +140,10 @@ export default function HelpCenterPage() {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 transform active:scale-95 ${
                     selectedCategory === cat
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200/70'
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20'
+                      : 'bg-zinc-100/80 text-zinc-600 hover:bg-zinc-200/80 hover:text-zinc-900'
                   }`}
                 >
                   {cat}
@@ -159,22 +159,26 @@ export default function HelpCenterPage() {
                   return (
                     <div
                       key={idx}
-                      className="bg-zinc-50/80 border border-zinc-200/60 rounded-2xl overflow-hidden transition-all"
+                      className={`bg-white/80 backdrop-blur-sm border transition-all duration-300 rounded-2xl overflow-hidden shadow-sm hover:shadow-md ${
+                        isOpen ? 'border-indigo-500/40 shadow-indigo-500/5' : 'border-zinc-200/70 hover:border-zinc-300'
+                      }`}
                     >
                       <button
                         onClick={() => setOpenIndex(isOpen ? null : idx)}
-                        className="w-full flex items-center justify-between p-4 text-left font-medium text-zinc-800 hover:bg-zinc-100/50 transition-colors"
+                        className="w-full flex items-center justify-between p-4 text-left font-medium text-zinc-800 hover:bg-zinc-50/50 transition-colors"
                       >
                         <span className="text-sm sm:text-base">{faq.question}</span>
-                        {isOpen ? (
-                          <ChevronUp className="w-5 h-5 text-zinc-600 flex-shrink-0 ml-2" />
-                        ) : (
-                          <ChevronRight className="w-5 h-5 text-zinc-400 flex-shrink-0 ml-2" />
-                        )}
+                        <div className={`p-1 rounded-full transition-transform duration-300 ${isOpen ? 'bg-indigo-50 text-indigo-600' : 'text-zinc-400'}`}>
+                          {isOpen ? (
+                            <ChevronUp className="w-4 h-4 flex-shrink-0" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                          )}
+                        </div>
                       </button>
 
                       {isOpen && (
-                        <div className="px-4 pb-4 pt-1 text-sm text-zinc-600 leading-relaxed border-t border-zinc-200/40">
+                        <div className="px-4 pb-4 pt-1 text-sm text-zinc-600 leading-relaxed border-t border-zinc-100 animate-fadeIn">
                           {faq.answer}
                         </div>
                       )}
@@ -182,7 +186,7 @@ export default function HelpCenterPage() {
                   );
                 })
               ) : (
-                <p className="text-center text-zinc-400 py-10 text-sm">No FAQs found matching your query.</p>
+                <p className="text-center text-zinc-400 py-10 text-sm animate-fadeIn">No FAQs found matching your query.</p>
               )}
             </div>
 
@@ -191,8 +195,8 @@ export default function HelpCenterPage() {
 
         {/* Tab Content: Contact */}
         {activeTab === 'Contact' && (
-          <div className="space-y-6 max-w-3xl">
-            <div className="bg-zinc-50/80 border border-zinc-200/60 rounded-2xl p-6 sm:p-8 space-y-6">
+          <div className="space-y-6 max-w-3xl animate-fadeIn">
+            <div className="bg-white/80 backdrop-blur-sm border border-zinc-200/80 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm shadow-zinc-100">
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold text-zinc-900">Get in touch with support</h2>
                 <p className="text-sm text-zinc-500">
@@ -202,31 +206,31 @@ export default function HelpCenterPage() {
 
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-zinc-500 mb-1">Your Email</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1.5">Your Email</label>
                   <input
                     type="email"
                     required
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3 bg-white border border-zinc-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full px-4 py-3 bg-white border border-zinc-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 shadow-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-zinc-500 mb-1">Message</label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1.5">Message</label>
                   <textarea
                     rows={4}
                     required
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     placeholder="Describe your issue or feedback..."
-                    className="w-full px-4 py-3 bg-white border border-zinc-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 resize-none"
+                    className="w-full px-4 py-3 bg-white border border-zinc-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 resize-none transition-all duration-300 shadow-sm"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center space-x-2 py-3.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white rounded-xl text-sm font-medium transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center space-x-2 py-3.5 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] disabled:bg-indigo-400 text-white rounded-xl text-sm font-medium transition-all duration-300 shadow-md shadow-indigo-600/20"
                 >
                   {isSubmitting ? (
                     <>
@@ -235,7 +239,7 @@ export default function HelpCenterPage() {
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                       <span>Send Message</span>
                     </>
                   )}
