@@ -111,13 +111,13 @@ export default function PersonalInfoPage() {
 
   return (
     /* Fixed height viewport with explicit vertical scrolling ONLY inside this page container */
-    <div className="w-full h-screen bg-white overflow-y-auto py-8 px-6 sm:px-12 lg:px-20">
-      <div className="w-full max-w-4xl mx-auto flex flex-col pb-20">
+    <div className="w-full h-screen bg-gradient-to-b from-white via-slate-50/30 to-white overflow-y-auto py-8 px-6 sm:px-12 lg:px-20 transition-all">
+      <div className="w-full max-w-4xl mx-auto flex flex-col pb-20 animate-fadeIn duration-500">
         
         <button 
           type="button" 
           onClick={() => router.back()} 
-          className="text-black self-start mb-6 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+          className="text-black self-start mb-6 p-2.5 hover:bg-gray-100/80 active:scale-95 rounded-full transition-all duration-200 shadow-xs hover:shadow-sm"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
@@ -131,17 +131,17 @@ export default function PersonalInfoPage() {
           </p>
 
           {/* Profile Picture Display with Upload functionality */}
-          <div className="relative self-center mb-10">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 bg-blue-50/70 rounded-3xl flex items-center justify-center border border-blue-100 overflow-hidden shadow-sm">
+          <div className="relative self-center mb-10 group">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 bg-blue-50/70 rounded-3xl flex items-center justify-center border border-blue-100 overflow-hidden shadow-sm transition-transform duration-300 group-hover:scale-[1.02]">
               {profile.avatar_url ? (
-                <img src={profile.avatar_url} alt="Profile Avatar" className="w-full h-full object-cover" />
+                <img src={profile.avatar_url} alt="Profile Avatar" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               ) : (
                 <User className="w-12 h-12 text-blue-300" />
               )}
             </div>
             <label 
               htmlFor="avatar-input" 
-              className="absolute bottom-[-4px] right-[-4px] bg-indigo-700 p-2.5 rounded-full text-white cursor-pointer shadow-md hover:bg-indigo-800 active:scale-95 transition-all block"
+              className="absolute bottom-[-4px] right-[-4px] bg-indigo-700 p-2.5 rounded-full text-white cursor-pointer shadow-lg hover:bg-indigo-800 hover:scale-105 active:scale-95 transition-all duration-200 block"
             >
               {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Pencil className="w-4 h-4" />}
             </label>
@@ -156,29 +156,29 @@ export default function PersonalInfoPage() {
           </div>
 
           {/* Details List Stack */}
-          <div className="w-full border border-gray-200 rounded-3xl overflow-hidden divide-y divide-gray-200 shadow-xs mb-10 bg-white">
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base">
+          <div className="w-full border border-gray-200/80 rounded-3xl overflow-hidden divide-y divide-gray-100 shadow-sm mb-10 bg-white/80 backdrop-blur-md transition-all">
+            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
               <span className="text-gray-400 flex items-center gap-3">
-                <User className="w-5 h-5 text-indigo-600" /> Name
+                <User className="w-5 h-5 text-indigo-600 transition-transform group-hover:scale-110" /> Name
               </span>
               <span className="text-black font-semibold">{profile.name || 'Not set'}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base">
+            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
               <span className="text-gray-400 flex items-center gap-3">
                 <Mail className="w-5 h-5 text-indigo-600" /> Email
               </span>
               <span className="text-black font-semibold">{profile.email || 'Not set'}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base">
+            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
               <span className="text-gray-400 flex items-center gap-3">
                 <Users className="w-5 h-5 text-indigo-600" /> Gender
               </span>
               <span className="text-black font-semibold">{profile.gender}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base">
+            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
               <span className="text-gray-400 flex items-center gap-3">
                 <Calendar className="w-5 h-5 text-indigo-600" /> Date of Birth
               </span>
@@ -189,7 +189,7 @@ export default function PersonalInfoPage() {
           <button
             type="button"
             onClick={() => router.push('/profile-setup')}
-            className="w-full max-w-md mx-auto bg-indigo-700 text-white font-semibold py-4 rounded-3xl shadow-sm hover:bg-indigo-800 active:scale-[0.98] transition-all flex justify-center items-center gap-2 text-base mb-12"
+            className="w-full max-w-md mx-auto bg-indigo-700 text-white font-semibold py-4 rounded-3xl shadow-md hover:bg-indigo-800 hover:shadow-lg active:scale-[0.98] transition-all duration-200 flex justify-center items-center gap-2 text-base mb-12"
           >
             Edit Complete Profile
           </button>
