@@ -324,10 +324,12 @@ export default function AIHelpersPage() {
 
   // 💡 SAVE TO SUPABASE HISTORY FUNCTION
 // 💡 SAVE TO SUPABASE HISTORY FUNCTION
+  // 💡 SAVE TO SUPABASE HISTORY FUNCTION
   const saveToHistory = async (queryText) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
+      // If user is logged in, attach their user_id so RLS blocks other users from seeing it
       const { error } = await supabase
         .from('chat_history')
         .insert([{ 
@@ -336,12 +338,7 @@ export default function AIHelpersPage() {
         }]);
 
       if (error) {
-        console.error('Error saving history:', {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code
-        });
+        console.error('Error saving history:', error.message);
       }
     } catch (err) {
       console.error('History save catch error:', err);
@@ -351,7 +348,7 @@ export default function AIHelpersPage() {
   const sendMessage = async (userText, currentHistory = chatMessages, customSystemPrompt = null) => {
     if (!userText.trim() || isLoading) return;
 
-    // Save prompt text to database history
+    // 1. SAVE TO DATABASE HISTORY HERE
     await saveToHistory(userText);
 
     const updatedMessages = [...currentHistory, { role: 'user', content: userText }];
@@ -389,7 +386,6 @@ export default function AIHelpersPage() {
       setIsLoading(false);
     }
   };
-
   const handleModalSubmit = (e) => {
     e.preventDefault();
     sendMessage(promptInput);

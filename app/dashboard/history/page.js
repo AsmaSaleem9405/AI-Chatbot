@@ -24,23 +24,31 @@ export default function HistoryPage() {
   useEffect(() => {
     fetchHistory();
   }, []);
-
-  const fetchHistory = async () => {
+const fetchHistory = async () => {
     try {
+      // 1. Get the current logged-in user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (userError || !user) {
+        setHistory([]);
+        return;
+      }
+
+      // 2. Fetch history filtered explicitly by user_id
       const { data, error } = await supabase
         .from('chat_history')
         .select('*')
+        .eq('user_id', user.id) // <-- Ensures users only see their own rows
         .order('created_at', { ascending: false });
 
       if (error) throw error;
       setHistory(data || []);
     } catch (error) {
-      console.error('Failed to fetch history', error);
+      console.error('Failed to fetch history:', error.message);
     } finally {
       setLoading(false);
     }
   };
-
   const handleDelete = async (id) => {
     setHistory((prev) => prev.filter((item) => item.id !== id));
     setSwipedId(null);
@@ -56,17 +64,23 @@ export default function HistoryPage() {
       fetchHistory(); // Revert on failure
     }
   };
-
-  const handleClearAll = async () => {
+const handleClearAll = async () => {
     setHistory([]);
     try {
-      await fetch('/api/history/clear', { method: 'DELETE' });
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('chat_history')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) throw error;
     } catch (error) {
       console.error('Failed to clear history', error);
-      fetchHistory();
+      fetchHistory(); // Revert on failure
     }
   };
-
   const filteredHistory = history.filter((item) =>
     item.query.toLowerCase().includes(searchQuery.toLowerCase())
   );
