@@ -68,18 +68,16 @@ export default function SignUp() {
 
   return (
     /* 
-      FIX FOR ROOT LAYOUT OVERFLOW-HIDDEN:
-      We make this container exactly the full size of the screen (`w-screen h-screen`), 
-      and give it its own isolated vertical scroll engine (`overflow-y-auto`).
-      'flex justify-center items-start sm:items-center' centers the form cleanly on big screens,
-      but keeps it safe at the top with natural padding on smaller/shorter screens.
+      FIXED MOBILE SCROLLING:
+      Changed `h-screen` to `min-h-screen` and increased vertical padding (`py-16`) 
+      so mobile screens can naturally scroll past the bottom button without clipping.
     */
-    <div className="w-screen h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-white flex justify-center items-start sm:items-center overflow-y-auto py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="w-full min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-white flex justify-center items-center overflow-y-auto py-16 px-4 sm:px-6 lg:px-8 relative">
       
       {/* Background Soft Ambient Light Blurs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-300/30 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Form White Card - Added 'my-auto' to ensure uniform margins at the top/bottom when scrolling */}
+      {/* Form White Card */}
       <div className="w-full max-w-md bg-white/95 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-100 my-auto transition-all duration-500 animate-fade-in">
         
         {/* Top Navigation Row */}
@@ -169,18 +167,18 @@ export default function SignUp() {
 
           {/* Terms Checkbox */}
        <div className="flex items-start gap-3 pt-1">
-  <input
+ <input
     type="checkbox"
     id="terms"
     checked={agreeTerms}
     onChange={(e) => setAgreeTerms(e.target.checked)}
     className="w-5 h-5 rounded border-blue-300 text-blue-700 focus:ring-blue-700 mt-0.5 cursor-pointer accent-blue-700"
-  />
+ />
 
-  <label
+ <label
     htmlFor="terms"
     className="text-sm text-blue-900/70 select-none cursor-pointer"
-  >
+ >
     I agree to the{" "}
     <Link
       href="/dashboard/terms"
@@ -189,7 +187,7 @@ export default function SignUp() {
     >
       Terms & Conditions
     </Link>
-  </label>
+ </label>
 </div>
 
           {/* Submit Action Buttons */}
