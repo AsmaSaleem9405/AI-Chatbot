@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from 'react';
 import { createClient } from '@/app/utils/supabase/client';
 import Link from 'next/link';
@@ -54,13 +54,24 @@ export default function SignUp() {
 
       if (error) throw error;
 
+      // Check if user already exists based on Supabase behavior
+      if (data?.user && data.user.identities && data.user.identities.length === 0) {
+        setErrorMsg("This account has already been created. Please log in instead.");
+        setLoading(false);
+        return;
+      }
+
       alert("Registration successful! Please check your email.");
 
       router.push("/login");
 
     } catch (err) {
       console.error(err);
-      setErrorMsg(err.message);
+      if (err.message.toLowerCase().includes("already registered") || err.message.toLowerCase().includes("already exists")) {
+        setErrorMsg("This account has already been created. Please log in instead.");
+      } else {
+        setErrorMsg(err.message);
+      }
     } finally {
       setLoading(false);
     }

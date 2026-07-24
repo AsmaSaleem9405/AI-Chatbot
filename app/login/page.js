@@ -32,7 +32,7 @@ export default function Login() {
     if (error) {
       if (error.message.toLowerCase().includes("invalid login credentials")) {
         setErrorMsg(
-          "Please register your account first before attempting to sign in.",
+          "Wrong password or email address. Please check your credentials and try again.",
         );
       } else {
         setErrorMsg(error.message);
