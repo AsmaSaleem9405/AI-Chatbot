@@ -68,20 +68,21 @@ export default function SignUp() {
 
   return (
     /* 
-      FIXED MOBILE SCROLLING:
-      Changed `h-screen` to `min-h-screen` and increased vertical padding (`py-16`) 
-      so mobile screens can naturally scroll past the bottom button without clipping.
+      MOBILE RESPONSIVE FIX:
+      - Changed `h-screen` to `min-h-screen` to allow page scrolling.
+      - Changed `items-center` to `items-start sm:items-center` so cards start at the top on small screens (preventing top/bottom clipping).
+      - Added responsive vertical padding (`py-8 sm:py-12`) to give breathing room.
     */
-    <div className="w-full min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-white flex justify-center items-center overflow-y-auto py-16 px-4 sm:px-6 lg:px-8 relative">
+    <div className="w-full min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-white flex justify-center items-start sm:items-center overflow-y-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative">
       
       {/* Background Soft Ambient Light Blurs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-300/30 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Form White Card */}
-      <div className="w-full max-w-md bg-white/95 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-100 my-auto transition-all duration-500 animate-fade-in">
+      {/* Form White Card - Reduced interior spacing on mobile (`p-5 sm:p-8`) and reduced vertical margin */}
+      <div className="w-full max-w-md bg-white/95 backdrop-blur-xl p-5 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-100 my-auto transition-all duration-500 animate-fade-in">
         
         {/* Top Navigation Row */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-2 sm:mb-4">
           <button type="button" onClick={() => router.back()} className="text-blue-900/70 hover:text-blue-950 transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -89,39 +90,39 @@ export default function SignUp() {
           </button>
         </div>
 
-        {/* Brand Logo and Headings */}
-        <div className="flex flex-col items-center text-center mb-6">
-            <div className="mb-4">
+        {/* Brand Logo and Headings - Made logo and margins slightly compact for mobile */}
+        <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+            <div className="mb-2 sm:mb-4">
            <Link href="/" className="inline-block">
   <Image
     src="/images/ai.png"
     alt="AI Chatbot Logo"
-    width={100}
-    height={100}
-    className="object-contain transition-transform duration-300 hover:scale-105"
+    width={80}
+    height={80}
+    className="object-contain transition-transform duration-300 hover:scale-105 sm:w-[100px] sm:h-[100px]"
   />
 </Link>
           </div>
-          <h1 className="text-3xl font-black text-blue-950 tracking-tight mb-1">Hello there!</h1>
-          <p className="text-blue-900/70 text-sm">Please enter your details to create an account</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-blue-950 tracking-tight mb-1">Hello there!</h1>
+          <p className="text-blue-900/70 text-xs sm:text-sm">Please enter your details to create an account</p>
         </div>
 
         {/* Error Alert Banner */}
         {errorMsg && (
-          <div className="mb-4 p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-xs font-semibold leading-relaxed animate-shake">
+          <div className="mb-3 p-3 sm:p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-xs font-semibold leading-relaxed animate-shake">
             {errorMsg}
           </div>
         )}
 
-        {/* Form Fields */}
-        <form onSubmit={handleSignUp} className="space-y-4">
+        {/* Form Fields - Tightened spacing (`space-y-3 sm:space-y-4`) */}
+        <form onSubmit={handleSignUp} className="space-y-3 sm:space-y-4">
           {/* Name Input */}
           <div className="group">
             <label className="block text-xs font-bold text-blue-950 uppercase tracking-wider mb-1 transition-colors group-focus-within:text-blue-700">Full Name</label>
             <input 
               type="text" required value={name} onChange={(e) => setName(e.target.value)}
               placeholder="John Doe" 
-              className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300"
+              className="w-full px-4 py-2.5 sm:py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300"
             />
           </div>
 
@@ -131,7 +132,7 @@ export default function SignUp() {
             <input 
               type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com" 
-              className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300"
+              className="w-full px-4 py-2.5 sm:py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300"
             />
           </div>
 
@@ -142,7 +143,7 @@ export default function SignUp() {
               <input 
                 type={showPass ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" 
-                className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300 pr-12"
+                className="w-full px-4 py-2.5 sm:py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300 pr-12"
               />
               <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-900/60 hover:text-blue-950 text-xs font-semibold focus:outline-none transition-colors">
                 {showPass ? "Hide" : "Show"}
@@ -157,7 +158,7 @@ export default function SignUp() {
               <input 
                 type={showConfirmPass ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••" 
-                className="w-full px-4 py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300 pr-12"
+                className="w-full px-4 py-2.5 sm:py-3 bg-blue-50/50 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:bg-white text-blue-950 placeholder-blue-400 text-sm transition-all duration-300 pr-12"
               />
               <button type="button" onClick={() => setShowConfirmPass(!showConfirmPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-900/60 hover:text-blue-950 text-xs font-semibold focus:outline-none transition-colors">
                 {showConfirmPass ? "Hide" : "Show"}
@@ -166,39 +167,39 @@ export default function SignUp() {
           </div>
 
           {/* Terms Checkbox */}
-       <div className="flex items-start gap-3 pt-1">
- <input
-    type="checkbox"
-    id="terms"
-    checked={agreeTerms}
-    onChange={(e) => setAgreeTerms(e.target.checked)}
-    className="w-5 h-5 rounded border-blue-300 text-blue-700 focus:ring-blue-700 mt-0.5 cursor-pointer accent-blue-700"
- />
+          <div className="flex items-start gap-3 pt-0.5">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={agreeTerms}
+              onChange={(e) => setAgreeTerms(e.target.checked)}
+              className="w-4 h-4 sm:w-5 sm:h-5 rounded border-blue-300 text-blue-700 focus:ring-blue-700 mt-0.5 cursor-pointer accent-blue-700"
+            />
 
- <label
-    htmlFor="terms"
-    className="text-sm text-blue-900/70 select-none cursor-pointer"
- >
-    I agree to the{" "}
-    <Link
-      href="/dashboard/terms"
-      className="underline text-blue-950 font-semibold hover:text-blue-700 transition-colors"
-      onClick={(e) => e.stopPropagation()}
-    >
-      Terms & Conditions
-    </Link>
- </label>
-</div>
+            <label
+              htmlFor="terms"
+              className="text-xs sm:text-sm text-blue-900/70 select-none cursor-pointer"
+            >
+              I agree to the{" "}
+              <Link
+                href="/dashboard/terms"
+                className="underline text-blue-950 font-semibold hover:text-blue-700 transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Terms & Conditions
+              </Link>
+            </label>
+          </div>
 
           {/* Submit Action Buttons */}
-          <div className="pt-4">
+          <div className="pt-2 sm:pt-4">
             <button 
               type="submit" disabled={loading}
-              className="w-full py-3.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-xl shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-[0.99] disabled:opacity-50 text-center text-sm"
+              className="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-xl shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-[0.99] disabled:opacity-50 text-center text-sm"
             >
               {loading ? "Creating Account..." : "Continue"}
             </button>
-            <p className="text-center text-xs text-blue-900/70 mt-4">
+            <p className="text-center text-xs text-blue-900/70 mt-3 sm:mt-4">
               Already have an account? <Link href="/login" className="text-blue-700 font-bold underline hover:text-blue-800 transition-colors">Log In</Link>
             </p>
           </div>
