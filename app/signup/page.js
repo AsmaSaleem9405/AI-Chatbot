@@ -68,18 +68,17 @@ export default function SignUp() {
 
   return (
     /* 
-      MOBILE RESPONSIVE FIX:
-      - Changed `h-screen` to `min-h-screen` to allow page scrolling.
-      - Changed `items-center` to `items-start sm:items-center` so cards start at the top on small screens (preventing top/bottom clipping).
-      - Added responsive vertical padding (`py-8 sm:py-12`) to give breathing room.
+      UNIVERSAL MOBILE SCROLL FIX:
+      - Uses `min-h-screen` combined with standard block layout padding (`py-10`) 
+        so the browser naturally creates a scroll track for any height screen.
     */
-    <div className="w-full min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-white flex justify-center items-start sm:items-center overflow-y-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen w-full bg-gradient-to-br from-sky-100 via-blue-50 to-white py-10 px-4 sm:px-6 lg:px-8 relative flex flex-col justify-center items-center">
       
       {/* Background Soft Ambient Light Blurs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-300/30 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Form White Card - Reduced interior spacing on mobile (`p-5 sm:p-8`) and reduced vertical margin */}
-      <div className="w-full max-w-md bg-white/95 backdrop-blur-xl p-5 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-100 my-auto transition-all duration-500 animate-fade-in">
+      {/* Form White Card */}
+      <div className="w-full max-w-md bg-white/95 backdrop-blur-xl p-5 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-100 relative z-10 transition-all duration-500">
         
         {/* Top Navigation Row */}
         <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -90,18 +89,18 @@ export default function SignUp() {
           </button>
         </div>
 
-        {/* Brand Logo and Headings - Made logo and margins slightly compact for mobile */}
+        {/* Brand Logo and Headings */}
         <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
-            <div className="mb-2 sm:mb-4">
-           <Link href="/" className="inline-block">
-  <Image
-    src="/images/ai.png"
-    alt="AI Chatbot Logo"
-    width={80}
-    height={80}
-    className="object-contain transition-transform duration-300 hover:scale-105 sm:w-[100px] sm:h-[100px]"
-  />
-</Link>
+          <div className="mb-2 sm:mb-4">
+            <Link href="/" className="inline-block">
+              <Image
+                src="/images/ai.png"
+                alt="AI Chatbot Logo"
+                width={80}
+                height={80}
+                className="object-contain transition-transform duration-300 hover:scale-105 sm:w-[100px] sm:h-[100px]"
+              />
+            </Link>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-blue-950 tracking-tight mb-1">Hello there!</h1>
           <p className="text-blue-900/70 text-xs sm:text-sm">Please enter your details to create an account</p>
@@ -114,7 +113,7 @@ export default function SignUp() {
           </div>
         )}
 
-        {/* Form Fields - Tightened spacing (`space-y-3 sm:space-y-4`) */}
+        {/* Form Fields */}
         <form onSubmit={handleSignUp} className="space-y-3 sm:space-y-4">
           {/* Name Input */}
           <div className="group">
