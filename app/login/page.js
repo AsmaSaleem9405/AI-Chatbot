@@ -57,7 +57,7 @@ export default function Login() {
           <div className="mb-4">
            <Link href="/" className="inline-block">
   <Image
-    src="/images/nexora.png"
+    src="/images/ai.png"
     alt="AI Chatbot Logo"
     width={100}
     height={100}

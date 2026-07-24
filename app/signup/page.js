@@ -96,7 +96,7 @@ export default function SignUp() {
             <div className="mb-4">
            <Link href="/" className="inline-block">
   <Image
-    src="/images/logo.png"
+    src="/images/ai.png"
     alt="AI Chatbot Logo"
     width={100}
     height={100}
@@ -168,15 +168,29 @@ export default function SignUp() {
           </div>
 
           {/* Terms Checkbox */}
-          <div className="flex items-start gap-3 pt-1">
-            <input 
-              type="checkbox" id="terms" checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)}
-              className="w-5 h-5 rounded border-blue-300 text-blue-700 focus:ring-blue-700 mt-0.5 cursor-pointer accent-blue-700"
-            />
-            <label htmlFor="terms" className="text-sm text-blue-900/70 select-none cursor-pointer">
-              I agree to the <span className="underline text-blue-950 font-semibold">Terms & Conditions</span>
-            </label>
-          </div>
+       <div className="flex items-start gap-3 pt-1">
+  <input
+    type="checkbox"
+    id="terms"
+    checked={agreeTerms}
+    onChange={(e) => setAgreeTerms(e.target.checked)}
+    className="w-5 h-5 rounded border-blue-300 text-blue-700 focus:ring-blue-700 mt-0.5 cursor-pointer accent-blue-700"
+  />
+
+  <label
+    htmlFor="terms"
+    className="text-sm text-blue-900/70 select-none cursor-pointer"
+  >
+    I agree to the{" "}
+    <Link
+      href="/dashboard/terms"
+      className="underline text-blue-950 font-semibold hover:text-blue-700 transition-colors"
+      onClick={(e) => e.stopPropagation()}
+    >
+      Terms & Conditions
+    </Link>
+  </label>
+</div>
 
           {/* Submit Action Buttons */}
           <div className="pt-4">
