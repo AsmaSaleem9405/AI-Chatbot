@@ -15,15 +15,10 @@ export default function WelcomePage() {
         }
       `}} />
 
-      {/* 
-        RESPONSIVE MOBILE FIX:
-        - Changed mobile height constraints from fixed `h-[40vh]/h-[60vh]` to automatic stack (`flex-col`).
-        - Uses `min-h-screen` across all viewports to allow smooth vertical scrolling on compact mobile screens.
-      */}
-      <main className="min-h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row md:h-screen m-0 p-0 overflow-x-hidden md:overflow-hidden selection:bg-[#3F37C9] selection:text-white">
+      <main className="min-h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row md:h-screen m-0 p-0 overflow-y-auto md:overflow-hidden selection:bg-[#3F37C9] selection:text-white">
         
         {/* Left Column: Gradient background with rotating logo */}
-        <div className="w-full md:w-1/2 bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] p-8 md:p-12 flex items-center justify-center relative min-h-[350px] md:h-full overflow-hidden border-b md:border-b-0 md:border-r border-gray-100">
+        <div className="w-full md:w-1/2 bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] p-8 md:p-12 flex items-center justify-center relative min-h-[350px] md:h-full overflow-hidden border-b md:border-b-0 md:border-r border-gray-100 shrink-0">
           
           {/* Subtle Ambient Glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(63,55,201,0.06)_0,transparent_70%)] pointer-events-none"></div>
@@ -48,7 +43,7 @@ export default function WelcomePage() {
         </div>
 
         {/* Right Column: Content & Actions */}
-        <div className="w-full md:w-1/2 bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start min-h-[400px] md:h-full relative">
+        <div className="w-full md:w-1/2 bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start min-h-full md:h-full relative overflow-y-auto">
           
           {/* Professional Text Content */}
           <div className="text-center md:text-left max-w-sm sm:max-w-md w-full">
