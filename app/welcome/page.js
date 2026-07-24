@@ -8,8 +8,13 @@ export default function WelcomePage() {
         dangerouslySetInnerHTML={{
           __html: `
             @keyframes slowSpin {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
+              from {
+                transform: rotate(0deg);
+              }
+
+              to {
+                transform: rotate(360deg);
+              }
             }
 
             .animate-slow-spin {
@@ -19,10 +24,10 @@ export default function WelcomePage() {
         }}
       />
 
-      <main className="min-h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row m-0 p-0 overflow-y-auto md:overflow-hidden selection:bg-[#3F37C9] selection:text-white">
+      <main className="min-h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row selection:bg-[#3F37C9] selection:text-white">
 
-        {/* Left Column */}
-        <div className="w-full md:w-1/2 min-h-[48vh] md:h-screen bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] py-12 sm:py-16 px-8 flex items-center justify-center relative shrink-0 border-b md:border-b-0 md:border-r border-gray-100">
+        {/* LEFT COLUMN */}
+        <div className="w-full md:w-1/2 min-h-[45vh] md:h-screen bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] py-12 sm:py-16 px-8 flex items-center justify-center relative shrink-0 border-b md:border-b-0 md:border-r border-gray-100">
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(63,55,201,0.06)_0,transparent_70%)] pointer-events-none"></div>
 
@@ -48,8 +53,8 @@ export default function WelcomePage() {
 
         </div>
 
-        {/* Right Column */}
-        <div className="w-full md:w-1/2 min-h-[52vh] md:h-screen bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start shrink-0">
+        {/* RIGHT COLUMN */}
+        <div className="w-full md:w-1/2 min-h-[55vh] md:h-screen bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start shrink-0">
 
           <div className="text-center md:text-left max-w-sm sm:max-w-md w-full">
 
@@ -65,7 +70,7 @@ export default function WelcomePage() {
               Where conversations meet intelligence.
             </h1>
 
-            <p className="text-gray-500 mt-4 text-sm sm:text-base leading-relaxed font-normal">
+            <p className="text-gray-500 mt-4 text-sm sm:text-base leading-relaxed">
               Experience seamless, context-aware AI interactions designed to
               streamline your workflow and elevate your productivity with
               NEXORA AI.
@@ -73,7 +78,7 @@ export default function WelcomePage() {
 
           </div>
 
-          <div className="mt-8 md:mt-10 space-y-3.5 max-w-sm sm:max-w-md w-full pb-6">
+          <div className="mt-8 md:mt-10 space-y-3.5 max-w-sm sm:max-w-md w-full pb-8">
 
             <Link href="/login" className="block w-full">
               <button className="w-full h-12 sm:h-13 rounded-xl bg-[#3F37C9] text-white font-medium text-sm sm:text-base shadow-sm hover:bg-[#372FB5] active:scale-[0.99] transition-all duration-150">
