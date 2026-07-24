@@ -31,10 +31,7 @@ export default function WelcomePage() {
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(63,55,201,0.06)_0,transparent_70%)] pointer-events-none"></div>
 
-          <div className="absolute -top-12 -left-12 w-64 h-64 rounded-full border border-indigo-200/40 pointer-events-none"></div>
-
-          <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full border border-indigo-200/40 pointer-events-none"></div>
-
+         
           <div className="relative z-10 flex items-center justify-center w-full">
 
             <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[300px] lg:max-w-[380px] aspect-square transition-transform duration-700 hover:scale-[1.02] drop-shadow-[0_10px_30px_rgba(63,55,201,0.07)] animate-slow-spin">
