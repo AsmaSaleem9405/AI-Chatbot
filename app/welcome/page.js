@@ -16,11 +16,11 @@ export default function WelcomePage() {
       `}} />
 
       {/* 
-        MOBILE VS DESKTOP VIEWPORT FIX:
-        - `h-auto overflow-y-auto` on mobile devices to allow full page scrolling.
-        - `md:h-screen md:overflow-hidden` on desktop to keep your strict fixed screen layout intact.
+        GUARANTEED MOBILE SCROLL FIX:
+        - Uses `min-h-full` and standard layout flow on mobile so the browser natively treats the document as scrollable.
+        - Preserves `md:h-screen md:overflow-hidden` precisely for desktop screens.
       */}
-      <main className="h-auto overflow-y-auto md:h-screen md:overflow-hidden w-full bg-[#FAFBFC] flex flex-col md:flex-row m-0 p-0 selection:bg-[#3F37C9] selection:text-white">
+      <main className="min-h-full md:h-screen w-full bg-[#FAFBFC] flex flex-col md:flex-row m-0 p-0 overflow-y-auto md:overflow-hidden selection:bg-[#3F37C9] selection:text-white">
         
         {/* Left Column: Gradient background with rotating logo */}
         <div className="w-full md:w-1/2 bg-gradient-to-br from-[#EEF2FD] via-[#E8EDFC] to-[#DFE6FA] py-16 px-8 flex items-center justify-center relative shrink-0 border-b md:border-b-0 md:border-r border-gray-100">
