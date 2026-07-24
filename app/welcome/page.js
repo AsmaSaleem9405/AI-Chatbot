@@ -48,7 +48,7 @@ export default function WelcomePage() {
         </div>
 
         {/* Right Column: Content & Actions */}
-        <div className="w-full md:w-1/2 bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start shrink-0">
+        <div className="w-full md:w-1/2 bg-white px-6 py-12 sm:p-12 md:p-16 lg:p-24 flex flex-col justify-center items-center md:items-start shrink-0 pb-16 md:pb-0">
           
           {/* Professional Text Content */}
           <div className="text-center md:text-left max-w-sm sm:max-w-md w-full">
