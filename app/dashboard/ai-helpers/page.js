@@ -620,9 +620,9 @@ export default function AIHelpersPage() {
               <div className="flex items-center space-x-3">
                 <a href="/dashboard/ai-helpers" className="flex items-center shrink-0">
                   <Image
-                    src="/images/nexora.png"
+                    src="/images/logo-1.png"
                     alt="Nexora AI Logo"
-                    width={100}
+                    width={50}
                     height={32}
                     className="object-contain"
                   />
