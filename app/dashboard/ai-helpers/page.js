@@ -9,7 +9,7 @@ import {
   Heart, ArrowLeft, Send, Sparkles, X, Loader2, 
   Code, Briefcase, Bot, Search, LogOut, ChevronDown,
   Stethoscope, Share2, Dumbbell,
-  FileText, Cpu, Plus, Settings, User
+  FileText, Cpu, Plus, Settings, Image as ImageIcon
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -226,6 +226,10 @@ export default function AIHelpersPage() {
   const [activeModal, setActiveModal] = useState(null);
   const [promptInput, setPromptInput] = useState('');
   
+  // Image Upload States
+  const [selectedImage, setSelectedImage] = useState(null); // base64 string
+  const fileInputRef = useRef(null);
+
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -320,41 +324,55 @@ export default function AIHelpersPage() {
   const handleOpenModal = (helper) => {
     setActiveModal(helper);
     setChatMessages([]);
+    setSelectedImage(null);
   };
 
-  // 💡 SAVE TO SUPABASE HISTORY FUNCTION
-// 💡 SAVE TO SUPABASE HISTORY FUNCTION
-  // 💡 SAVE TO SUPABASE HISTORY FUNCTION
   const saveToHistory = async (queryText) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      // If user is logged in, attach their user_id so RLS blocks other users from seeing it
-      const { error } = await supabase
+      await supabase
         .from('chat_history')
         .insert([{ 
           query: queryText, 
           user_id: user ? user.id : null 
         }]);
-
-      if (error) {
-        console.error('Error saving history:', error.message);
-      }
     } catch (err) {
       console.error('History save catch error:', err);
     }
   };
 
+  // Handle Image File Selection from Gallery
+  const handleImageSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSelectedImage(reader.result); // Base64 data URL
+    };
+    reader.readAsDataURL(file);
+  };
+
   const sendMessage = async (userText, currentHistory = chatMessages, customSystemPrompt = null) => {
-    if (!userText.trim() || isLoading) return;
+    const messageToSend = userText.trim();
+    if (!messageToSend && !selectedImage) return;
+    if (isLoading) return;
 
-    // 1. SAVE TO DATABASE HISTORY HERE
-    await saveToHistory(userText);
+    await saveToHistory(messageToSend || '[Image Upload]');
 
-    const updatedMessages = [...currentHistory, { role: 'user', content: userText }];
+    // Add user message to UI state (include image preview if attached)
+    const newMsg = { 
+      role: 'user', 
+      content: messageToSend || 'Analyze this image.',
+      image: selectedImage 
+    };
+
+    const updatedMessages = [...currentHistory, newMsg];
     setChatMessages(updatedMessages);
     
+    const currentImagePayload = selectedImage;
     setPromptInput('');
+    setSelectedImage(null);
     setIsLoading(true);
 
     try {
@@ -363,7 +381,8 @@ export default function AIHelpersPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           systemPrompt: customSystemPrompt || activeModal?.systemPrompt || 'You are a helpful AI assistant.',
-          userMessage: userText,
+          userMessage: messageToSend || 'Analyze this image and guide me on what it is about.',
+          imageUrl: currentImagePayload,
           history: updatedMessages
         }),
       });
@@ -386,6 +405,7 @@ export default function AIHelpersPage() {
       setIsLoading(false);
     }
   };
+
   const handleModalSubmit = (e) => {
     e.preventDefault();
     sendMessage(promptInput);
@@ -415,22 +435,23 @@ export default function AIHelpersPage() {
   const handleResetChat = () => {
     setChatMessages([]);
     setPromptInput('');
+    setSelectedImage(null);
   };
 
   const closeModal = () => {
     setActiveModal(null);
     setPromptInput('');
     setChatMessages([]);
+    setSelectedImage(null);
   };
 
   return (
     <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
-     {/* NAVBAR */}
+       {/* NAVBAR */}
 <header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8">
   <div className="max-w-6xl mx-auto h-full flex items-center justify-between sm:justify-end">
     
-    {/* Logo (Top Left - Visible on Mobile ONLY, Hidden on Laptop/Desktop) */}
     <Link href="/" className="inline-block transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] sm:hidden">
       <Image
         src="/images/ai.png"
@@ -442,7 +463,6 @@ export default function AIHelpersPage() {
       />
     </Link>
 
-    {/* Profile Dropdown Container (Top Right) */}
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsProfileOpen((prev) => !prev)}
@@ -467,7 +487,6 @@ export default function AIHelpersPage() {
         <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Dropdown Menu Overlay */}
       {isProfileOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
           <div className="px-4 py-3 border-b border-slate-100">
@@ -505,10 +524,10 @@ export default function AIHelpersPage() {
 
   </div>
 </header>
+
       {/* MAIN CONTAINER */}
       <main className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-6 space-y-8 pb-32">
         
-        {/* NEW CHAT / SEARCH BAR */}
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded-2xl shadow-sm">
           <div className="bg-white rounded-[15px] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-3">
             <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hidden sm:block">
@@ -536,7 +555,6 @@ export default function AIHelpersPage() {
           </div>
         </div>
 
-        {/* CATEGORY FILTER PILLS */}
         <div className="flex items-center space-x-2 overflow-x-auto pb-2 pt-1 no-scrollbar">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat;
@@ -556,7 +574,6 @@ export default function AIHelpersPage() {
           })}
         </div>
 
-        {/* HELPER CATEGORY SECTIONS */}
         <div className="space-y-10">
           {categoriesToDisplay.map((catName) => {
             const groupHelpers = filteredHelpers.filter(h => h.category === catName);
@@ -614,7 +631,6 @@ export default function AIHelpersPage() {
       {activeModal && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col h-full w-full">
           
-          {/* Top Bar Header with Logo & Controls */}
           <div className="px-4 py-3 sm:px-8 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0 max-w-5xl mx-auto w-full">
             <div className="flex items-center space-x-3">
               <button 
@@ -641,7 +657,6 @@ export default function AIHelpersPage() {
               </div>
             </div>
             
-            {/* Action Buttons: New Chat & Close */}
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleResetChat}
@@ -662,13 +677,11 @@ export default function AIHelpersPage() {
             </div>
           </div>
 
-          {/* Chat Messages Body */}
           <div className="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 py-6 sm:px-6 flex flex-col justify-between">
             
             <div className="space-y-4 flex-1">
               {chatMessages.length === 0 ? (
                 <div className="h-full flex flex-col justify-end pb-4">
-                  {/* Suggestion Cards Container */}
                   {activeModal.suggestions && activeModal.suggestions.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                       {activeModal.suggestions.map((item, idx) => (
@@ -686,33 +699,7 @@ export default function AIHelpersPage() {
                         </button>
                       ))}
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                      <button
-                        onClick={() => sendMessage('Why does the earth rotate?')}
-                        className="p-4 bg-slate-50 hover:bg-indigo-50/50 border border-slate-100 rounded-2xl text-left transition group"
-                      >
-                        <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 mb-1">
-                          Why does the earth rotate?
-                        </p>
-                        <p className="text-xs text-slate-400">
-                          Discover the science behind Earth's motion.
-                        </p>
-                      </button>
-
-                      <button
-                        onClick={() => sendMessage('Write me a recommendation letter')}
-                        className="p-4 bg-slate-50 hover:bg-indigo-50/50 border border-slate-100 rounded-2xl text-left transition group"
-                      >
-                        <p className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 mb-1">
-                          Write me a recommendation letter
-                        </p>
-                        <p className="text-xs text-slate-400">
-                          Get a professional and persuasive letter instantly.
-                        </p>
-                      </button>
-                    </div>
-                  )}
+                  ) : null}
                 </div>
               ) : (
                 chatMessages.map((msg, index) => (
@@ -733,6 +720,16 @@ export default function AIHelpersPage() {
                           <span>NEXORA AI</span>
                         </div>
                       )}
+                      
+                      {/* Render uploaded image thumbnail inside chat bubble if attached */}
+                      {msg.image && (
+                        <img 
+                          src={msg.image} 
+                          alt="Uploaded attachment" 
+                          className="w-full max-h-60 object-cover rounded-xl mb-2 border border-white/20"
+                        />
+                      )}
+
                       <div className="whitespace-pre-wrap">{msg.content}</div>
                     </div>
                   </div>
@@ -754,28 +751,63 @@ export default function AIHelpersPage() {
 
           {/* Bottom Fixed Input Box */}
           <div className="w-full bg-white border-t border-slate-100 p-3 sm:p-4 shrink-0">
-            <form onSubmit={handleModalSubmit} className="max-w-3xl mx-auto flex items-center space-x-2">
-              <input
-                type="text"
-                placeholder="Ask me anything..."
-                value={promptInput}
-                onChange={(e) => setPromptInput(e.target.value)}
-                className="flex-1 bg-slate-50 border border-slate-200/80 rounded-full px-5 py-3.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition placeholder-slate-400"
-              />
-              <button
-                type="submit"
-                disabled={isLoading || !promptInput.trim()}
-                className="w-12 h-12 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition shadow-md shrink-0"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Send className="w-5 h-5 translate-x-0.5" />
-                )}
-              </button>
-            </form>
-          </div>
+            <div className="max-w-3xl mx-auto flex flex-col gap-2">
+              
+              {/* Selected Image Preview Tag */}
+              {selectedImage && (
+                <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 p-2 rounded-xl w-fit">
+                  <img src={selectedImage} alt="Preview" className="w-10 h-10 object-cover rounded-lg" />
+                  <span className="text-xs text-slate-600 font-medium">Image attached</span>
+                  <button 
+                    onClick={() => setSelectedImage(null)}
+                    className="p-1 hover:bg-slate-200 rounded-full text-slate-500"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
 
+              <form onSubmit={handleModalSubmit} className="flex items-center space-x-2">
+                {/* Hidden file input */}
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleImageSelect} 
+                  accept="image/*" 
+                  className="hidden" 
+                />
+                
+                {/* Gallery Upload Button */}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="p-3 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-full transition shrink-0"
+                  title="Upload image from gallery"
+                >
+                  <ImageIcon className="w-5 h-5" />
+                </button>
+
+                <input
+                  type="text"
+                  placeholder={selectedImage ? "Ask something about this image..." : "Ask me anything..."}
+                  value={promptInput}
+                  onChange={(e) => setPromptInput(e.target.value)}
+                  className="flex-1 bg-slate-50 border border-slate-200/80 rounded-full px-5 py-3.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition placeholder-slate-400"
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || (!promptInput.trim() && !selectedImage)}
+                  className="w-12 h-12 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition shadow-md shrink-0"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5 translate-x-0.5" />
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       )}
     </div>
