@@ -376,16 +376,17 @@ export default function AIHelpersPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/ai-helper', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemPrompt: customSystemPrompt || activeModal?.systemPrompt || 'You are a helpful AI assistant.',
-          userMessage: messageToSend || 'Analyze this image and guide me on what it is about.',
-          imageUrl: currentImagePayload,
-          history: updatedMessages
-        }),
-      });
+  // Inside your sendMessage function:
+const res = await fetch('/api/ai-helper', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    systemPrompt: customSystemPrompt || activeModal?.systemPrompt || 'You are a helpful AI assistant.',
+    userMessage: messageToSend || 'Analyze this image and guide me on what it is about.',
+    imageUrl: currentImagePayload, // <--- Ensure this field matches what your API expects
+    history: updatedMessages
+  }),
+});
 
       const data = await res.json();
       if (res.ok) {

@@ -21,13 +21,10 @@ export async function POST(req) {
       lowerMsg.includes('generate image');
 
     if (isImageGenerationRequest) {
-      // Clean up the prompt to use as the image description
       const promptDescription = userMessage
         .replace(/create an image of|generate an image of|draw a|make a picture of|generate image/gi, '')
         .trim();
 
-      // Using Pollinations AI (Free, no API key required) for instant image generation
-      // Alternatively, you can use OpenAI DALL-E 3 if you have an OpenAI API key configured.
       const encodedPrompt = encodeURIComponent(promptDescription || userMessage);
       const generatedImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true`;
 
@@ -42,19 +39,28 @@ export async function POST(req) {
     const baseSystemPrompt = body.systemPrompt || 'You are a helpful AI assistant.';
     const systemPrompt = `${baseSystemPrompt} Always detect the language of the user's latest message and respond fluently in that exact same language.`;
 
-    // 3. Format history
-    const formattedHistory = rawHistory.map((msg) => {
+    // 3. Format history safely (preserving previous text strings)
+    const formattedHistory = rawHistory.slice(0, -1).map((msg) => {
       const role = msg.sender === 'user' || msg.role === 'user' ? 'user' : 'assistant';
-      const content = msg.text || msg.content || '';
+      // Handle if content is string or array parts
+      let content = '';
+      if (typeof msg.content === 'string') {
+        content = msg.content;
+      } else if (Array.isArray(msg.content)) {
+        const textPart = msg.content.find(p => p.type === 'text');
+        content = textPart ? textPart.text : '[Image Attachment]';
+      } else {
+        content = msg.text || '';
+      }
       return { role, content };
-    }).filter(msg => msg.content.trim() !== '');
+    }).filter(msg => msg.content && msg.content.trim() !== '');
 
     const messages = [
       { role: 'system', content: systemPrompt },
       ...formattedHistory,
     ];
 
-    // 4. Construct message payload (supporting text + optional image upload)
+    // 4. Construct current user content payload supporting image + text
     let currentUserContent;
     if (imageUrl) {
       currentUserContent = [
@@ -62,21 +68,16 @@ export async function POST(req) {
         { type: 'image_url', image_url: { url: imageUrl } },
       ];
     } else {
-      currentUserContent = userMessage;
+      currentUserContent = userMessage || 'Hello';
     }
 
-    if (
-      (userMessage || imageUrl) &&
-      (formattedHistory.length === 0 ||
-        formattedHistory[formattedHistory.length - 1]?.content !== userMessage)
-    ) {
-      messages.push({ role: 'user', content: currentUserContent });
-    }
+    messages.push({ role: 'user', content: currentUserContent });
 
-    // 5. Send to Groq Vision Model
+    // 5. Send to Groq Vision Model (Ensure a vision-capable model is used)
     const completion = await groq.chat.completions.create({
       messages,
-      model: 'qwen/qwen3.6-27b',
+      model: 'qwen/qwen3.6-27b', // Verified vision-capable model on Groq
+      temperature: 0.7,
     });
 
     const result = completion.choices[0]?.message?.content || 'No response generated.';
