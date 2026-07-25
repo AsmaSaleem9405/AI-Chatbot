@@ -110,7 +110,6 @@ export default function PersonalInfoPage() {
   }
 
   return (
-    /* Fixed height viewport with explicit vertical scrolling ONLY inside this page container */
     <div className="w-full h-screen bg-gradient-to-b from-white via-slate-50/30 to-white overflow-y-auto py-8 px-6 sm:px-12 lg:px-20 transition-all">
       <div className="w-full max-w-4xl mx-auto flex flex-col pb-20 animate-fadeIn duration-500">
         
@@ -130,7 +129,6 @@ export default function PersonalInfoPage() {
             View your profile details, picture, and account settings.
           </p>
 
-          {/* Profile Picture Display with Upload functionality */}
           <div className="relative self-center mb-10 group">
             <div className="w-28 h-28 sm:w-32 sm:h-32 bg-blue-50/70 rounded-3xl flex items-center justify-center border border-blue-100 overflow-hidden shadow-sm transition-transform duration-300 group-hover:scale-[1.02]">
               {profile.avatar_url ? (
@@ -155,33 +153,24 @@ export default function PersonalInfoPage() {
             />
           </div>
 
-          {/* Details List Stack */}
           <div className="w-full border border-gray-200/80 rounded-3xl overflow-hidden divide-y divide-gray-100 shadow-sm mb-10 bg-white/80 backdrop-blur-md transition-all">
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
-              <span className="text-gray-400 flex items-center gap-3">
-                <User className="w-5 h-5 text-indigo-600 transition-transform group-hover:scale-110" /> Name
-              </span>
+            <div className="w-full px-6 py-5 flex items-center gap-4 text-base hover:bg-gray-50/50 transition-colors">
+              <User className="w-5 h-5 text-indigo-600 transition-transform group-hover:scale-110 shrink-0" />
               <span className="text-black font-semibold">{profile.name || 'Not set'}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
-              <span className="text-gray-400 flex items-center gap-3">
-                <Mail className="w-5 h-5 text-indigo-600" /> Email
-              </span>
+            <div className="w-full px-6 py-5 flex items-center gap-4 text-base hover:bg-gray-50/50 transition-colors">
+              <Mail className="w-5 h-5 text-indigo-600 shrink-0" />
               <span className="text-black font-semibold">{profile.email || 'Not set'}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
-              <span className="text-gray-400 flex items-center gap-3">
-                <Users className="w-5 h-5 text-indigo-600" /> Gender
-              </span>
+            <div className="w-full px-6 py-5 flex items-center gap-4 text-base hover:bg-gray-50/50 transition-colors">
+              <Users className="w-5 h-5 text-indigo-600 shrink-0" />
               <span className="text-black font-semibold">{profile.gender}</span>
             </div>
 
-            <div className="w-full px-6 py-5 flex items-center justify-between text-base hover:bg-gray-50/50 transition-colors">
-              <span className="text-gray-400 flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-indigo-600" /> Date of Birth
-              </span>
+            <div className="w-full px-6 py-5 flex items-center gap-4 text-base hover:bg-gray-50/50 transition-colors">
+              <Calendar className="w-5 h-5 text-indigo-600 shrink-0" />
               <span className="text-black font-semibold">{profile.dob}</span>
             </div>
           </div>
