@@ -1,5 +1,6 @@
 // app/(dashboard)/chat/page.js
 "use client";
+import MarkdownRenderer from './MarkdownRenderer';
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Sparkles, Trash2, Loader2 } from "lucide-react";
