@@ -18,21 +18,25 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="w-full min-h-screen bg-[#F8F8FF] flex flex-col md:flex-row selection:bg-[#3B38D8]/20">
-      {/* Navigation Sidebar / Bottom Bar */}
+      
+      {/* Navigation Bar (Bottom on mobile, Left Sidebar on desktop) */}
       <nav className="fixed z-50 bg-white/90 backdrop-blur-md border-gray-100 shadow-lg shadow-gray-200/40
         bottom-0 left-0 right-0 border-t py-2 px-6
         md:top-0 md:bottom-auto md:right-auto md:w-64 md:h-screen md:border-t-0 md:border-r md:p-6 md:flex md:flex-col md:justify-start
         transition-all duration-300"
       >
-        <Link href="/" className="inline-block transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]">
-          <Image
-            src="/images/ai.png"
-            alt="AI Chatbot Logo"
-            width={90}
-            height={90}
-            className="object-contain -mt-5 ml-12"
-          />
-        </Link>
+        {/* Desktop Logo Only */}
+        <div className="hidden md:block">
+          <Link href="/" className="inline-block transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]">
+            <Image
+              src="/images/ai.png"
+              alt="AI Chatbot Logo"
+              width={90}
+              height={90}
+              className="object-contain -mt-5 ml-12"
+            />
+          </Link>
+        </div>
 
         <ul className="flex items-center justify-between md:flex-col md:items-start md:justify-start md:space-y-2">
           {navItems.map((item) => {

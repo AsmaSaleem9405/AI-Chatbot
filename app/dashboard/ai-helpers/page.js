@@ -1,5 +1,5 @@
 'use client';
-
+import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -426,74 +426,85 @@ export default function AIHelpersPage() {
   return (
     <div className="w-full h-screen overflow-y-auto bg-[#f8f9fc] text-slate-900 font-sans antialiased relative">
       
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8">
-        <div className="max-w-6xl mx-auto h-full flex items-center justify-end">
+     {/* NAVBAR */}
+<header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8">
+  <div className="max-w-6xl mx-auto h-full flex items-center justify-between sm:justify-end">
+    
+    {/* Logo (Top Left - Visible on Mobile ONLY, Hidden on Laptop/Desktop) */}
+    <Link href="/" className="inline-block transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] sm:hidden">
+      <Image
+        src="/images/ai.png"
+        alt="AI Chatbot Logo"
+        width={90}
+        height={90}
+        className="object-contain w-auto h-9"
+        priority
+      />
+    </Link>
 
-          {/* Profile Dropdown Container (Top Right) */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setIsProfileOpen((prev) => !prev)}
-              className="flex items-center space-x-2.5 p-1.5 rounded-full hover:bg-slate-100 transition focus:outline-none"
-            >
-              {profile.image ? (
-                <img
-                  src={profile.image}
-                  alt={profile.name}
-                  className="w-9 h-9 rounded-full object-cover border border-indigo-100 shadow-sm"
-                />
-              ) : (
-                <div className="w-9 h-9 rounded-full bg-indigo-600 text-white font-semibold flex items-center justify-center text-sm shadow-sm">
-                  {profile.name ? profile.name.charAt(0).toUpperCase() : "U"}
-                </div>
-              )}
+    {/* Profile Dropdown Container (Top Right) */}
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsProfileOpen((prev) => !prev)}
+        className="flex items-center space-x-2.5 p-1.5 rounded-full hover:bg-slate-100 transition focus:outline-none"
+      >
+        {profile.image ? (
+          <img
+            src={profile.image}
+            alt={profile.name}
+            className="w-9 h-9 rounded-full object-cover border border-indigo-100 shadow-sm"
+          />
+        ) : (
+          <div className="w-9 h-9 rounded-full bg-indigo-600 text-white font-semibold flex items-center justify-center text-sm shadow-sm">
+            {profile.name ? profile.name.charAt(0).toUpperCase() : "U"}
+          </div>
+        )}
 
-              <span className="text-sm font-medium text-slate-700 hidden sm:inline-block">
-                {profile.name}
-              </span>
+        <span className="text-sm font-medium text-slate-700 hidden sm:inline-block">
+          {profile.name}
+        </span>
 
-              <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
-            </button>
+        <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
+      </button>
 
-            {/* Dropdown Menu Overlay */}
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-4 py-3 border-b border-slate-100">
-                  <p className="text-sm font-semibold text-slate-900 truncate">{profile.name}</p>
-                  {profile.email && (
-                    <p className="text-xs text-slate-500 truncate mt-0.5">{profile.email}</p>
-                  )}
-                </div>
-
-                <div className="py-1">
-                  <button
-                    onClick={() => {
-                      setIsProfileOpen(false);
-                      router.push('/settings');
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition"
-                  >
-                    <Settings className="w-4 h-4 text-slate-400" />
-                    <span>Settings</span>
-                  </button>
-                </div>
-
-                <div className="border-t border-slate-100 pt-1">
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition font-medium"
-                  >
-                    <LogOut className="w-4 h-4 text-red-500" />
-                    <span>Sign Out</span>
-                  </button>
-                </div>
-              </div>
+      {/* Dropdown Menu Overlay */}
+      {isProfileOpen && (
+        <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="px-4 py-3 border-b border-slate-100">
+            <p className="text-sm font-semibold text-slate-900 truncate">{profile.name}</p>
+            {profile.email && (
+              <p className="text-xs text-slate-500 truncate mt-0.5">{profile.email}</p>
             )}
           </div>
 
-        </div>
-      </header>
+          <div className="py-1">
+            <button
+              onClick={() => {
+                setIsProfileOpen(false);
+                router.push('/settings');
+              }}
+              className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition"
+            >
+              <Settings className="w-4 h-4 text-slate-400" />
+              <span>Settings</span>
+            </button>
+          </div>
 
+          <div className="border-t border-slate-100 pt-1">
+            <button
+              onClick={handleSignOut}
+              className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition font-medium"
+            >
+              <LogOut className="w-4 h-4 text-red-500" />
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+
+  </div>
+</header>
       {/* MAIN CONTAINER */}
       <main className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-6 space-y-8 pb-32">
         
