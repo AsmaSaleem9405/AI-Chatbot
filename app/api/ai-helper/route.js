@@ -35,14 +35,13 @@ export async function POST(req) {
       });
     }
 
-    // 2. Regular Multilingual System Prompt
+    // 2. Strict Short Response System Prompt
     const baseSystemPrompt = body.systemPrompt || 'You are a helpful AI assistant.';
-    const systemPrompt = `${baseSystemPrompt} Always detect the language of the user's latest message and respond fluently in that exact same language.`;
+    const systemPrompt = `${baseSystemPrompt} Rules: Detect the language of the user's latest message and reply in that exact language. If the user says a casual greeting like "hello", "hi", or "hey", reply ONLY with a short phrase like "Hello! How can I help you today?" Do not write meta-commentary, do not explain what you are doing, and keep all greetings short and direct.`;
 
-    // 3. Format history safely (preserving previous text strings)
+    // 3. Format history safely
     const formattedHistory = rawHistory.slice(0, -1).map((msg) => {
       const role = msg.sender === 'user' || msg.role === 'user' ? 'user' : 'assistant';
-      // Handle if content is string or array parts
       let content = '';
       if (typeof msg.content === 'string') {
         content = msg.content;
@@ -73,14 +72,18 @@ export async function POST(req) {
 
     messages.push({ role: 'user', content: currentUserContent });
 
-    // 5. Send to Groq Vision Model (Ensure a vision-capable model is used)
+    // 5. Send to Groq Vision Model with reasoning hidden
     const completion = await groq.chat.completions.create({
       messages,
-      model: 'qwen/qwen3.6-27b', // Verified vision-capable model on Groq
-      temperature: 0.7,
+      model: 'qwen/qwen3.6-27b',
+      temperature: 0.5,
+      reasoning_format: 'hidden', // Hides the <think> blocks from output
     });
 
-    const result = completion.choices[0]?.message?.content || 'No response generated.';
+    const rawResult = completion.choices[0]?.message?.content || 'No response generated.';
+    
+    // Safety fallback to strip any accidental think tags if returned
+    const result = rawResult.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
 
     return NextResponse.json({ result, text: result });
   } catch (err) {

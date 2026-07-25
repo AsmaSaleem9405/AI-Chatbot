@@ -1,4 +1,5 @@
 'use client';
+import MarkdownRenderer from './MarkdownRenderer';
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from 'react';
@@ -31,7 +32,7 @@ const HELPERS = [
     description: 'Craft compelling essays effortlessly.',
     icon: Pencil,
     image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an expert Essay Writer. Help the user draft, outline, and refine well-structured essays.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Why does the earth rotate?', desc: 'Discover the science behind Earth\'s motion.' },
       { title: 'Write me a recommendation letter', desc: 'Get a professional and persuasive letter instantly.' }
@@ -44,7 +45,7 @@ const HELPERS = [
     description: 'Get structured, research-backed academic content.',
     icon: GraduationCap,
     image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Academic Writing Specialist. Provide scholarly, well-formatted content.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Outline a research paper', desc: 'Structure key sections for academic submission.' },
       { title: 'Summarize a study', desc: 'Extract key methodologies and key conclusions.' }
@@ -57,7 +58,7 @@ const HELPERS = [
     description: 'Turn your ideas into catchy and meaningful lyrics.',
     icon: Music,
     image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a creative Songwriter and Lyricist.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Write an acoustic chorus', desc: 'Emotional and catchy chorus for acoustic guitar.' },
       { title: 'Rhyme scheme ideas', desc: 'Generate fresh lyrics around love or life.' }
@@ -70,7 +71,7 @@ const HELPERS = [
     description: 'Create engaging and immersive stories in seconds.',
     icon: BookOpen,
     image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Master Storyteller.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Sci-Fi Plot Twist', desc: 'Brainstorm a mind-bending story conclusion.' },
       { title: 'Character Backstory', desc: 'Build a deep and complex hero biography.' }
@@ -85,7 +86,7 @@ const HELPERS = [
     description: 'Write professional and polished emails instantly.',
     icon: Mail,
     image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Executive Communication Expert.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Ask for a salary raise', desc: 'Polite and convincing email to your manager.' },
       { title: 'Cold outreach email', desc: 'Engaging email pitch for potential clients.' }
@@ -98,7 +99,7 @@ const HELPERS = [
     description: 'Ace your interviews with expert tips and mock practice.',
     icon: UserCheck,
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Experienced Technical & HR Interviewer.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Mock HR Questions', desc: 'Practice answering "Tell me about yourself".' },
       { title: 'STAR Method tips', desc: 'Structure your behavioral answers smoothly.' }
@@ -111,8 +112,8 @@ const HELPERS = [
     description: 'Structure startup pitches that captivate investors.',
     icon: Briefcase,
     image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a VC Investment Analyst.',
-    suggestions: [
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.' ,
+   suggestions: [
       { title: 'Problem & Solution slide', desc: 'Craft a compelling vision statement.' },
       { title: 'Monetization Strategy', desc: 'Outline business models clearly for VC funding.' }
     ]
@@ -126,7 +127,7 @@ const HELPERS = [
     description: 'Understand medical terms, symptoms, and health advice.',
     icon: Stethoscope,
     image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an informative AI Medical Assistant.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Explain blood test terms', desc: 'Understand normal ranges and terminology.' },
       { title: 'Healthy sleep habits', desc: 'Tips for improving circadian rhythms.' }
@@ -139,8 +140,8 @@ const HELPERS = [
     description: 'Get custom workout routines and fitness advice.',
     icon: Dumbbell,
     image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a certified Personal Trainer.',
-    suggestions: [
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.' ,
+   suggestions: [
       { title: '30-minute HIIT routine', desc: 'No-equipment bodyweight workout plan.' },
       { title: 'High-protein diet ideas', desc: 'Easy meal ideas to support muscle recovery.' }
     ]
@@ -152,8 +153,8 @@ const HELPERS = [
     description: 'Find clarity and calm with empathetic guidance.',
     icon: Heart,
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an empathetic Mindful Guide.',
-    suggestions: [
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.' ,
+   suggestions: [
       { title: '5-minute breathing exercise', desc: 'Reduce anxiety and reset your mind.' },
       { title: 'Daily journaling prompts', desc: 'Reflect on gratitude and focus.' }
     ]
@@ -167,8 +168,8 @@ const HELPERS = [
     description: 'Fix bugs and optimize code across any programming language.',
     icon: Code,
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Senior Software Engineer.',
-    suggestions: [
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.' ,
+   suggestions: [
       { title: 'Fix React render loop', desc: 'Identify and fix infinite state updates.' },
       { title: 'Optimize SQL query', desc: 'Improve database query response times.' }
     ]
@@ -180,7 +181,7 @@ const HELPERS = [
     description: 'Design database schemas and software systems.',
     icon: Cpu,
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Principal Software Architect.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Design user auth schema', desc: 'Relational model for roles & permissions.' },
       { title: 'Microservices vs Monolith', desc: 'Choose the best setup for your product.' }
@@ -195,7 +196,7 @@ const HELPERS = [
     description: 'Generate viral content ideas, captions, and posts.',
     icon: Share2,
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are a Social Media Content Strategist.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
     suggestions: [
       { title: 'Instagram Reel strategy', desc: 'Hooks and captions to drive engagement.' },
       { title: 'LinkedIn content calendar', desc: 'Weekly schedule for professional reach.' }
@@ -210,7 +211,8 @@ const HELPERS = [
     description: 'Craft ATS-friendly resumes tailored to your target job.',
     icon: FileText,
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&auto=format&fit=crop&q=80',
-    systemPrompt: 'You are an Executive Resume Writer.',
+systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses brief, conversational, and directly to the point without unnecessary explanations.',
+
     suggestions: [
       { title: 'Action verbs for bullet points', desc: 'Make achievements stand out on paper.' },
       { title: 'Target resume to job post', desc: 'Match keywords for ATS filters.' }
@@ -731,7 +733,11 @@ const res = await fetch('/api/ai-helper', {
                         />
                       )}
 
-                      <div className="whitespace-pre-wrap">{msg.content}</div>
+                     {msg.role === 'assistant' ? (
+  <MarkdownRenderer content={msg.content} />
+) : (
+  <div className="whitespace-pre-wrap">{msg.content}</div>
+)}
                     </div>
                   </div>
                 ))
