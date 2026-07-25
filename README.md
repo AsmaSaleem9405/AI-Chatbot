@@ -15,6 +15,8 @@ This project is a full-stack AI web application where users can:
 - Manage profile settings
 - Reset passwords
 - Access personalized dashboard
+- Export Chat History
+
 
 ---
 
@@ -82,21 +84,12 @@ utils/
 
 ## 📸 Screenshots
 
-### Home Page
-
-(Add Screenshot Here)
-
-### Login
-
-(Add Screenshot Here)
-
-### Dashboard
-
-(Add Screenshot Here)
-
-### AI Chat
-
-(Add Screenshot Here)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwind-css)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase)
+![Gemini](https://img.shields.io/badge/Google-Gemini-blue?logo=google)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -164,7 +157,7 @@ http://localhost:3000
 - Multiple AI Models
 - Dark Mode
 - Team Collaboration
-- Export Chat History
+
 
 ---
 
