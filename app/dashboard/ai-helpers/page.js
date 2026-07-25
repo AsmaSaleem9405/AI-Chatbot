@@ -730,7 +730,7 @@ export default function AIHelpersPage() {
                       {msg.role === 'assistant' && (
                         <div className="flex items-center space-x-1 text-xs font-semibold text-indigo-600 mb-1">
                           <Sparkles className="w-3.5 h-3.5" />
-                          <span>AI Assistant</span>
+                          <span>NEXORA AI</span>
                         </div>
                       )}
                       <div className="whitespace-pre-wrap">{msg.content}</div>
