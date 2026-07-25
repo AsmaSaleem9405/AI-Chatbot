@@ -497,17 +497,17 @@ export default function AIHelpersPage() {
           </div>
 
           <div className="py-1">
-            <button
-              onClick={() => {
-                setIsProfileOpen(false);
-                router.push('/settings');
-              }}
-              className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition"
-            >
-              <Settings className="w-4 h-4 text-slate-400" />
-              <span>Settings</span>
-            </button>
-          </div>
+  <button
+    onClick={() => {
+      setIsProfileOpen(false);
+      router.push("/dashboard/settings");
+    }}
+    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition"
+  >
+    <Settings className="w-4 h-4 text-slate-400" />
+    <span>Settings</span>
+  </button>
+</div>
 
           <div className="border-t border-slate-100 pt-1">
             <button
