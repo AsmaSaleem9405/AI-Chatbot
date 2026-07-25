@@ -7,14 +7,15 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    // 1. Support both request formats (chat section & other sections)
     const userMessage = body.userMessage || body.prompt || '';
-    const systemPrompt = body.systemPrompt || 'You are a helpful AI assistant.';
     const rawHistory = body.history || [];
+
+    // 1. Multilingual-ready dynamic system prompt
+    const baseSystemPrompt = body.systemPrompt || 'You are a helpful AI assistant.';
+    const systemPrompt = `${baseSystemPrompt} Always detect the language of the user's latest message and respond fluently in that exact same language.`;
 
     // 2. Format history to standard Groq schema ({ role, content })
     const formattedHistory = rawHistory.map((msg) => {
-      // Map UI frontend formats (sender: "user"/"ai" or role: "user"/"assistant")
       const role =
         msg.sender === 'user' || msg.role === 'user'
           ? 'user'
@@ -25,13 +26,12 @@ export async function POST(req) {
       return { role, content };
     }).filter(msg => msg.content.trim() !== '');
 
-    // 3. Assemble full messages array: System Prompt + Past History
+    // 3. Assemble full messages array
     const messages = [
       { role: 'system', content: systemPrompt },
       ...formattedHistory,
     ];
 
-    // If the latest message isn't at the end of formattedHistory, append it
     if (
       userMessage &&
       (formattedHistory.length === 0 ||
@@ -48,7 +48,6 @@ export async function POST(req) {
 
     const result = completion.choices[0]?.message?.content || 'No response generated.';
 
-    // Return both 'result' and 'text' for maximum backend-frontend compatibility
     return NextResponse.json({ result, text: result });
   } catch (err) {
     console.error('Groq AI Error:', err);
