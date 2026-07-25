@@ -1,12 +1,27 @@
+'use client';
 import React from 'react';
-import { Shield, Lock, Eye, Database, Cpu, UserCheck, Mail } from 'lucide-react';
+
+import { Shield, Lock, Eye, Database, Cpu, UserCheck, Mail, ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function PrivacyPolicyPage() {
+  const router = useRouter();
+
   return (
     <div className="h-screen overflow-y-auto bg-gradient-to-br from-blue-50 via-white to-sky-100 text-zinc-950 flex flex-col selection:bg-blue-500 selection:text-white">
       {/* Main Container - Full width utilization on laptops with clean spacing */}
       <main className="w-full px-6 sm:px-16 lg:px-24 py-12 flex-grow pb-28 animate-fadeIn transition-all duration-500">
         
+        {/* Back Button */}
+        <div className="mb-6 max-w-4xl">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white/80 hover:bg-white text-zinc-700 hover:text-blue-600 border border-blue-100 shadow-sm hover:shadow transition-all duration-200 text-sm font-medium cursor-pointer group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" />
+          </button>
+        </div>
+
         {/* Page Header with Floating Animation */}
         <div className="max-w-4xl mb-10 border-b border-blue-200/60 pb-6 transition-all duration-300 animate-slideDown">
           <div className="flex items-center space-x-3 text-blue-600 mb-2 transform transition-transform duration-300 hover:translate-x-1">

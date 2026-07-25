@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { ChevronRight, ChevronUp, Search, Send, Loader2 } from 'lucide-react';
+import { ChevronRight, ChevronUp, Search, Send, Loader2, ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const faqData = [
   {
@@ -38,6 +39,7 @@ const faqData = [
 const categories = ['All', 'Account', 'Billing', 'Prompting'];
 
 export default function HelpCenterPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('FAQ');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [openIndex, setOpenIndex] = useState(1);
@@ -83,8 +85,17 @@ export default function HelpCenterPage() {
 
   return (
     <div className="h-screen overflow-y-auto bg-gradient-to-br from-zinc-50 via-white to-zinc-100 text-zinc-900 flex flex-col selection:bg-indigo-500 selection:text-white">
-      <main className="w-full px-6 sm:px-12 py-10 flex-grow pb-28 animate-fadeIn">
+      <main className="w-full px-6 sm:px-12 py-10 flex-grow pb-28 animate-fadeIn max-w-3xl mx-auto">
         
+        {/* Back Button */}
+       <div className="mb-6 max-w-4xl">
+                       <button
+                         onClick={() => router.back()}
+                         className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white/80 hover:bg-white text-zinc-700 hover:text-blue-600 border border-blue-100 shadow-sm hover:shadow transition-all duration-200 text-sm font-medium cursor-pointer group"
+                       >
+                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" />
+                       </button>
+                     </div>
         {/* Header Title */}
         <div className="mb-6 transform transition-all duration-300">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent">
@@ -93,7 +104,7 @@ export default function HelpCenterPage() {
         </div>
 
         {/* Top Navigation Tabs (FAQ / Contact) */}
-        <div className="flex border-b border-zinc-200/80 mb-8 max-w-3xl">
+        <div className="flex border-b border-zinc-200/80 mb-8">
           <button
             onClick={() => setActiveTab('FAQ')}
             className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition-all duration-300 relative ${
@@ -120,7 +131,7 @@ export default function HelpCenterPage() {
 
         {/* Tab Content: FAQ */}
         {activeTab === 'FAQ' && (
-          <div className="space-y-6 max-w-3xl animate-fadeIn">
+          <div className="space-y-6 animate-fadeIn">
             
             {/* Search Bar */}
             <div className="relative group">
@@ -195,7 +206,7 @@ export default function HelpCenterPage() {
 
         {/* Tab Content: Contact */}
         {activeTab === 'Contact' && (
-          <div className="space-y-6 max-w-3xl animate-fadeIn">
+          <div className="space-y-6 animate-fadeIn">
             <div className="bg-white/80 backdrop-blur-sm border border-zinc-200/80 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm shadow-zinc-100">
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold text-zinc-900">Get in touch with support</h2>

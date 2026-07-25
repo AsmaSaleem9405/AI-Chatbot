@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { Download, Trash2, ShieldCheck, Loader2 } from 'lucide-react';
+import { Download, Trash2, ShieldCheck, Loader2, ArrowLeft } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
+import { useRouter } from 'next/navigation';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -10,6 +11,7 @@ const supabase = createClient(
 );
 
 export default function DataControlsPage() {
+  const router = useRouter();
   const [isExporting, setIsExporting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -126,6 +128,16 @@ export default function DataControlsPage() {
     <div className="h-screen overflow-y-auto bg-gradient-to-br from-blue-50 via-sky-50/50 to-white text-zinc-900 flex flex-col selection:bg-indigo-500 selection:text-white">
       <main className="w-full px-6 sm:px-12 py-12 flex-grow pb-28 max-w-3xl mx-auto transition-all duration-300">
         
+        {/* Back Button */}
+        <div className="mb-6">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white/80 hover:bg-white text-zinc-700 hover:text-blue-600 border border-blue-100 shadow-sm hover:shadow transition-all duration-200 text-sm font-medium cursor-pointer group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" />
+          </button>
+        </div>
+
         {/* Header Section */}
         <div className="mb-10 transition-all duration-500 transform hover:translate-x-1">
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 bg-clip-text text-transparent">
