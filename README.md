@@ -82,7 +82,6 @@ utils/
 
 ---
 
-## 📸 Screenshots
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
