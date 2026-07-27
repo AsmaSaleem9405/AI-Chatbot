@@ -74,8 +74,7 @@ export default function MarkdownRenderer({ content }) {
             </code>
           );
         },
-        p({ children, node }) {
-          // Check if children contain a block-level element like a div or pre to prevent HTML nesting errors
+        p({ children }) {
           const hasBlockElement = React.Children.toArray(children).some(
             (child) => React.isValidElement(child) && (child.type === CodeBlock || child.type === 'div' || child.type === 'pre')
           );

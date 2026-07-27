@@ -223,7 +223,7 @@ systemPrompt: 'You are a helpful and concise AI assistant. Keep your responses b
 export default function AIHelpersPage() {
   const router = useRouter();
   const supabase = createClient();
-
+const [showAttachMenu, setShowAttachMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeModal, setActiveModal] = useState(null);
   const [promptInput, setPromptInput] = useState('');
@@ -757,7 +757,8 @@ const res = await fetch('/api/ai-helper', {
           </div>
 
           {/* Bottom Fixed Input Box */}
-          <div className="w-full bg-white border-t border-slate-100 p-3 sm:p-4 shrink-0">
+         {/* Bottom Fixed Input Box */}
+          <div className="w-full bg-white border-t border-slate-100 p-3 sm:p-4 shrink-0 relative">
             <div className="max-w-3xl mx-auto flex flex-col gap-2">
               
               {/* Selected Image Preview Tag */}
@@ -774,42 +775,64 @@ const res = await fetch('/api/ai-helper', {
                 </div>
               )}
 
-              <form onSubmit={handleModalSubmit} className="flex items-center space-x-2">
+              <form onSubmit={handleModalSubmit} className="flex items-center space-x-2 relative">
                 {/* Hidden file input */}
                 <input 
                   type="file" 
                   ref={fileInputRef} 
-                  onChange={handleImageSelect} 
+                  onChange={(e) => {
+                    handleImageSelect(e);
+                    setShowAttachMenu(false); // Close menu after selecting
+                  }} 
                   accept="image/*" 
                   className="hidden" 
                 />
                 
-                {/* Gallery Upload Button */}
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="p-3 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-full transition shrink-0"
-                  title="Upload image from gallery"
-                >
-                  <ImageIcon className="w-5 h-5" />
-                </button>
+                {/* Plus Icon Button */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowAttachMenu((prev) => !prev)}
+                    className="p-2.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition"
+                    title="Add attachment"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+
+                  {/* Popup Menu when clicking + */}
+                  {showAttachMenu && (
+                    <div className="absolute bottom-12 left-0 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition font-medium"
+                      >
+                        <ImageIcon className="w-4 h-4 text-indigo-600" />
+                        <span>Upload Image</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
 
                 <input
                   type="text"
-                  placeholder={selectedImage ? "Ask something about this image..." : "Ask me anything..."}
+                  placeholder="Type your message or ask a question..."
                   value={promptInput}
                   onChange={(e) => setPromptInput(e.target.value)}
-                  className="flex-1 bg-slate-50 border border-slate-200/80 rounded-full px-5 py-3.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition placeholder-slate-400"
+                  className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:bg-white transition"
                 />
+
                 <button
                   type="submit"
                   disabled={isLoading || (!promptInput.trim() && !selectedImage)}
-                  className="w-12 h-12 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition shadow-md shrink-0"
+                  className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white p-3 rounded-xl transition shadow-sm flex items-center justify-center shrink-0"
                 >
                   {isLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Send className="w-5 h-5 translate-x-0.5" />
+                    <Send className="w-4 h-4" />
                   )}
                 </button>
               </form>
